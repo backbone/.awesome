@@ -85,16 +85,26 @@ myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
+   { "lock", "xscreensaver-command --lock" },
    { "quit", awesome.quit }
 }
 
+function lock_screen ()
+  os.execute ("xscreensaver-command --lock")
+end
 mywebmenu = {
   { "firefox", "firefox" },
   { "pidgin", "pidgin" }
 }
 
+myconfigmenu = {
+  { "xscreensaver", "xscreensaver-demo" }
+}
+
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "web", mywebmenu, beautiful.awesome_icon },
+                                    { "config", myconfigmenu, beautiful.awesome_icon },
+                                    { "lock", "xscreensaver-command --lock" },
                                     { "open terminal", terminal }
                                   }
                         })
@@ -254,6 +264,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ modkey, "Control"   }, "l", lock_screen),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
