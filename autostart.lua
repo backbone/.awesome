@@ -1,2 +1,5 @@
 os.execute ("xscreensaver -no-splash &")
 os.execute ("pidgin &")
+os.execute ("pgrep stardict || stardict &")
+os.execute ("pgrep urxvt || urxvt &")
+os.execute ("pgrep firefox || firefox &")

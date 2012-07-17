@@ -55,28 +55,41 @@ modkey = "Mod1"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
-    awful.layout.suit.floating,
+    awful.layout.suit.max,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
+    awful.layout.suit.floating,
     awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
+--    awful.layout.suit.spiral,
+--    awful.layout.suit.spiral.dwindle,
+--    awful.layout.suit.magnifier
 }
 -- }}}
 
+-- -- {{{ Tags
+-- -- Define a tag table which hold all screen tags.
+-- tags = {}
+-- for s = 1, screen.count() do
+--     -- Each screen has its own tag table.
+--     tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+-- end
+-- -- }}}
 -- {{{ Tags
--- Define a tag table which hold all screen tags.
-tags = {}
-for s = 1, screen.count() do
-    -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
-end
+ -- Define a tag table which will hold all screen tags.
+ tags = {
+   names  = { "rxvt",     "www",      "vbox",     "gimp",     "office",
+            6,          "games",    "dict",     "im" },
+   layout = { layouts[3], layouts[1], layouts[1], layouts[1], layouts[1],
+            layouts[1], layouts[1], layouts[1], layouts[6]
+ }}
+ for s = 1, screen.count() do
+     -- Each screen has its own tag table.
+     tags[s] = awful.tag(tags.names, s, tags.layout)
+ end
 -- }}}
 
 -- {{{ Menu
@@ -367,15 +380,36 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    { rule = { class = "URxvt" },
+      properties = { tag = tags[1][1] } },
+    { rule = { class = "Firefox" },
+      properties = { tag = tags[1][2] } },
+    { rule = { class = "VirtualBox" },
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "Gimp" },
+      properties = { floating = true, tag = tags[1][4] } },
+    { rule = { class = "Soffice" },
+      properties = { floating = false, tag = tags[1][5] } },
+    { rule = { class = "libreoffice-writer" },
+      properties = { floating = false, tag = tags[1][5] } },
+    { rule = { class = "libreoffice-calc" },
+      properties = { floating = false, tag = tags[1][5] } },
+    { rule = { class = "libreoffice-draw" },
+      properties = { floating = false, tag = tags[1][5] } },
+    { rule = { class = "libreoffice-base" },
+      properties = { floating = false, tag = tags[1][5] } },
+    { rule = { class = "libreoffice-math" },
+      properties = { floating = false, tag = tags[1][5] } },
+    { rule = { class = "libreoffice-impress" },
+      properties = { floating = false, tag = tags[1][5] } },
+    { rule = { class = "libreoffice-startcenter" },
+      properties = { floating = false, tag = tags[1][5] } },
+    { rule = { class = "Pidgin" },
+      properties = { tag = tags[1][9] } },
+    { rule = { class = "Stardict" },
+      properties = { tag = tags[1][8] } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
-    { rule = { class = "pinentry" },
-      properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
-    -- Set Firefox to always map on tags number 2 of screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
 }
 -- }}}
 
