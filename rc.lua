@@ -10,6 +10,7 @@ require("naughty")
 require("autostart")
 require("apps")
 require("volume")
+require("vicious")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -127,6 +128,16 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- }}}
 
 -- {{{ Wibox
+ --  Network usage widget
+ -- Initialize widget
+ netwidget = widget({ type = "textbox" })
+ -- Register widget
+ vicious.register(netwidget, vicious.widgets.net, '<span color="#7F9F7F">${wlan0 down_kb}</span> <span color="#CC9393">${wlan0 up_kb}</span>', 3)
+dnicon = widget({ type = "imagebox" })
+upicon = widget({ type = "imagebox" })
+dnicon.image = image(beautiful.widget_net)
+upicon.image = image(beautiful.widget_netup)
+
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
 
@@ -210,6 +221,8 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
         volume_widget,
+        netwidget,
+        -- separator, upicon, netwidget, dnicon,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
