@@ -128,15 +128,48 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- }}}
 
 -- {{{ Wibox
- --  Network usage widget
- -- Initialize widget
- netwidget = widget({ type = "textbox" })
- -- Register widget
- vicious.register(netwidget, vicious.widgets.net, '<span color="#7F9F7F">${wlan0 down_kb}</span> <span color="#CC9393">${wlan0 up_kb}</span>', 3)
-dnicon = widget({ type = "imagebox" })
-upicon = widget({ type = "imagebox" })
-dnicon.image = image(beautiful.widget_net)
-upicon.image = image(beautiful.widget_netup)
+ --  My widgets
+ wifi_widget_down = widget({ type = "textbox" })
+ wifi_widget_up = widget({ type = "textbox" })
+ icon_wifi = widget({ type = "imagebox" })
+ icon_wifidown = widget({ type = "imagebox" })
+ icon_wifiup = widget({ type = "imagebox" })
+ icon_wifi.image = image(beautiful.widget_wifi)
+ icon_wifidown.image = image(beautiful.widget_wifidown)
+ icon_wifiup.image = image(beautiful.widget_wifiup)
+ wired_widget_down = widget({ type = "textbox" })
+ wired_widget_up = widget({ type = "textbox" })
+ icon_wired = widget({ type = "imagebox" })
+ icon_wireddown = widget({ type = "imagebox" })
+ icon_wiredup = widget({ type = "imagebox" })
+ icon_wired.image = image(beautiful.widget_wired)
+ icon_wireddown.image = image(beautiful.widget_wireddown)
+ icon_wiredup.image = image(beautiful.widget_wiredup)
+
+ bat_widget = widget({ type = "textbox" })
+ bat_icon = widget({ type = "imagebox" })
+ bat_icon.image = image(beautiful.widget_bat)
+
+ cpu_widget = widget({ type = "textbox" })
+ cpu_icon = widget({ type = "imagebox" })
+ cpu_icon.image = image(beautiful.widget_cpu)
+
+ mem_widget = widget({ type = "textbox" })
+ mem_icon = widget({ type = "imagebox" })
+ mem_icon.image = image(beautiful.widget_mem)
+
+ -- vol_widget = widget({ type = "textbox" })
+ vol_icon = widget({ type = "imagebox" })
+ vol_icon.image = image(beautiful.widget_vol)
+
+ vicious.register(wifi_widget_down, vicious.widgets.net, '<span color="#7F9F7F">${wlan0 down_kb}</span>', 3)
+ vicious.register(wifi_widget_up, vicious.widgets.net, '<span color="#CC9393">${wlan0 up_kb}</span>', 3)
+ vicious.register(wired_widget_down, vicious.widgets.net, '<span color="#7F9F7F">${eth0 down_kb}</span>', 3)
+ vicious.register(wired_widget_up, vicious.widgets.net, '<span color="#CC9393">${eth0 up_kb}</span>', 3)
+ vicious.register(bat_widget, vicious.widgets.bat, "$2%", 120, "BAT0")
+ vicious.register(cpu_widget, vicious.widgets.cpu, "$1%")
+ vicious.register(mem_widget, vicious.widgets.mem, "$1%")
+
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
@@ -220,9 +253,12 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
-        volume_widget,
-        netwidget,
-        -- separator, upicon, netwidget, dnicon,
+        volume_widget, vol_icon,
+        separator, wifi_widget_up, icon_wifiup, wifi_widget_down, icon_wifidown, icon_wifi,
+        separator, wired_widget_up, icon_wiredup, wired_widget_down, icon_wireddown, icon_wired,
+        bat_widget, bat_icon,
+        mem_widget, mem_icon,
+        cpu_widget, cpu_icon,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft

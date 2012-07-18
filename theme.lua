@@ -92,9 +92,16 @@ theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
 theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
 
-
-theme.widget_net = "~/.config/awesome/icons/down.png"
-theme.widget_netup = "~/.config/awesome/icons/up.png"
+theme.widget_cpu = "~/.config/awesome/icons/16x16/cpu.png"
+theme.widget_mem = "~/.config/awesome/icons/16x16/mem.png"
+theme.widget_bat = "~/.config/awesome/icons/16x16/battery.png"
+theme.widget_vol = "~/.config/awesome/icons/16x16/vol-hi.png"
+theme.widget_wifi = "~/.config/awesome/icons/16x16/net-wifi.png"
+theme.widget_wifidown = "~/.config/awesome/icons/16x16/down.png"
+theme.widget_wifiup = "~/.config/awesome/icons/16x16/up.png"
+theme.widget_wired = "~/.config/awesome/icons/16x16/net-wired2.png"
+theme.widget_wireddown = "~/.config/awesome/icons/16x16/down.png"
+theme.widget_wiredup = "~/.config/awesome/icons/16x16/up.png"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=80

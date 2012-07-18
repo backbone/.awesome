@@ -37,6 +37,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][8] } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
+    -- XTerm на пятом и шестом теге первого экрана
+    { rule = { class = "XTerm" }, callback = function(c) c:tags({tags[1][5], tags[1][6]}) end},
 }
 -- }}}
 
