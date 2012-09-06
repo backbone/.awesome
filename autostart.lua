@@ -1,3 +1,4 @@
+os.execute ("numlockx on")
 os.execute ("xscreensaver -no-splash &")
 os.execute ("pidgin &")
 os.execute ("pgrep stardict || stardict &")
