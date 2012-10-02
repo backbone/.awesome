@@ -1,4 +1,5 @@
 os.execute ("numlockx on &")
+os.execute ("xsetroot -cursor_name left_ptr &")
 os.execute ("xscreensaver -no-splash &")
 os.execute ("pidgin &")
 os.execute ("pgrep stardict || stardict &")
