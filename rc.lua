@@ -85,7 +85,7 @@ layouts =
    names  = { "rxvt",     "www",      "vbox",     "gimp",     "office",
               "notes",    "games",    "dict",     "im" },
    layout = { layouts[3], layouts[1], layouts[1], layouts[1], layouts[1],
-            layouts[1], layouts[1], layouts[1], layouts[6]
+            layouts[1], layouts[1], layouts[1], layouts[2]
  }}
  for s = 1, screen.count() do
      -- Each screen has its own tag table.
