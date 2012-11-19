@@ -349,7 +349,11 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end)
+              end),
+    awful.key({ modkey }, "o",function () awful.util.spawn( "mpc next" ) end),
+    awful.key({ modkey }, "i",function () awful.util.spawn( "mpc prev" ) end),
+    awful.key({ modkey }, "u",function () awful.util.spawn( "mpc play" ) end),
+    awful.key({ modkey }, "p",function () awful.util.spawn( "mpc pause" ) end)
 )
 
 clientkeys = awful.util.table.join(
