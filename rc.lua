@@ -121,7 +121,7 @@ mydrawmenu = {
   { "Inkscape", "inkscape" },
   { "Shotwell", "shotwell" },
   { "GQView", "gqview" },
-  { "GColor", "gcolor" }
+  { "GColor", "gcolor2" }
 }
 
 myaudiomenu = {
