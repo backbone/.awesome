@@ -31,6 +31,8 @@ awful.rules.rules = {
       properties = { floating = false, tag = tags[1][5] } },
     { rule = { class = "libreoffice-startcenter" },
       properties = { floating = false, tag = tags[1][5] } },
+    { rule = { class = "Okular" },
+      properties = { floating = false, tag = tags[1][5] } },
     { rule = { class = "Lyx" },
       properties = { tag = tags[1][5] } },
     { rule = { class = "Evince" },

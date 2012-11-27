@@ -98,6 +98,7 @@ layouts =
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
+   { "xscreensaver", "xscreensaver-demo" },
    { "restart", awesome.restart },
    { "lock", "xscreensaver-command --lock" },
    { "quit", awesome.quit }
@@ -106,18 +107,93 @@ myawesomemenu = {
 function lock_screen ()
   os.execute ("xscreensaver-command --lock")
 end
+
 mywebmenu = {
-  { "firefox", "firefox" },
-  { "pidgin", "pidgin" }
+  { "Firefox", "firefox" },
+  { "Pidgin", "pidgin" },
+  { "Psi", "psi" },
+  { "Evernote", "nixnote.sh" }
 }
 
-myconfigmenu = {
-  { "xscreensaver", "xscreensaver-demo" }
+mydrawmenu = {
+  { "Dia", "dia --integrated" },
+  { "Gimp", "gimp" },
+  { "Inkscape", "inkscape" },
+  { "Shotwell", "shotwell" },
+  { "GQView", "gqview" },
+  { "GColor", "gcolor" }
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+myaudiomenu = {
+  { "Sonata", "sonata" }
+}
+
+myvideo = {
+  { "Avidemux", "avidemux" },
+  { "RecordMyDesktop", "gtk-recordMyDesktop" }
+}
+
+myeditorsmenu = {
+  { "GVim", "gvim" },
+  { "Oxygen", "oxygen" }
+}
+
+mydevmenu = {
+  { "Alleyoop", "alleyoop" },
+  { "Android DDMS", "ddms" },
+  { "Android Update", "android" },
+  { "Anuta", "anjuta" },
+  { "DDD", "ddd" },
+  { "Glade", "glade" },
+  { "KCachegrind", "kcachegrind" },
+  { "LabView-8.6", "labview-8.6" }
+}
+
+mygamesmenu = {
+  { "Tuxtracer", "etracer" },
+  { "Eboard", "eboard" },
+  { "Nexuiz", "nexuiz" },
+  { "LinCity NG", "lincity-ng" },
+}
+
+myofficemenu = {
+  { "LO Writer", "lowriter" },
+  { "LO Calc", "localc" },
+  { "LO Draw", "lodraw" },
+  { "LO Base", "lobase" },
+  { "LO Math", "lomath" },
+  { "LO Impress", "loimpress" },
+  { "Okular", "okular" },
+  { "Evince", "evince" },
+  { "Stardict", "stardict" },
+  { "Xchm", "xchm" },
+  { "Xdvik", "xdvik" },
+  { "LyX", "lyx" }
+}
+
+myutilsmenu = {
+  { "File-Roller", "file-roller" },
+  { "Xfburn", "xfburn" },
+  { "GParted", "gksudo gparted" },
+  { "GTK-Theme", "gtk-chtheme" }
+}
+
+myvmmenu = {
+  { "VirtualBox", "VirtualBox" },
+  { "DosBox", "dosbox" }
+}
+
+mymainmenu = awful.menu({ items = {
+                                    { "awesome", myawesomemenu, beautiful.awesome_icon },
+                                    { "audio", myaudiomenu, beautiful.awesome_icon },
+                                    { "dev", mydevmenu, beautiful.awesome_icon },
+                                    { "draw", mydrawmenu, beautiful.awesome_icon },
+                                    { "edit", myeditorsmenu, beautiful.awesome_icon },
+                                    { "office", myofficemenu, beautiful.awesome_icon },
+                                    { "utils", myutilsmenu, beautiful.awesome_icon },
+                                    { "video", myvideo, beautiful.awesome_icon },
+                                    { "vm", myvmmenu, beautiful.awesome_icon },
                                     { "web", mywebmenu, beautiful.awesome_icon },
-                                    { "config", myconfigmenu, beautiful.awesome_icon },
                                     { "lock", "xscreensaver-command --lock" },
                                     { "open terminal", terminal }
                                   }
