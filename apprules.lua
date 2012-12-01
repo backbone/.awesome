@@ -13,6 +13,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][2] } },
     { rule = { class = "VirtualBox" },
       properties = { tag = tags[1][3] } },
+    { rule = { class = "Aqemu" },
+      properties = { tag = tags[1][3] } },
     { rule = { class = "Gimp" },
       properties = { floating = true, tag = tags[1][4] } },
     { rule = { class = "Soffice" },

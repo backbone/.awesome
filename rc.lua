@@ -82,7 +82,7 @@ layouts =
 -- {{{ Tags
  -- Define a tag table which will hold all screen tags.
  tags = {
-   names  = { "rxvt",     "www",      "vbox",     "gimp",     "office",
+   names  = { "rxvt",     "www",      "vm",       "gimp",     "office",
               "notes",    "games",    "dict",     "im" },
    layout = { layouts[3], layouts[1], layouts[1], layouts[1], layouts[1],
             layouts[1], layouts[1], layouts[1], layouts[2]
@@ -180,6 +180,7 @@ myutilsmenu = {
 
 myvmmenu = {
   { "VirtualBox", "VirtualBox" },
+  { "AQemu", "aqemu" },
   { "DosBox", "dosbox" }
 }
 
