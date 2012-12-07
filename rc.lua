@@ -8,7 +8,7 @@ require("beautiful")
 require("naughty")
 
 require("autostart")
-require("apps")
+-- require("apps")
 require("volume")
 require("vicious")
 
@@ -82,8 +82,8 @@ layouts =
 -- {{{ Tags
  -- Define a tag table which will hold all screen tags.
  tags = {
-   names  = { "rxvt",     "www",      "vm",       "gimp",     "office",
-              "notes",    "games",    "dict",     "im" },
+   names  = { "term",     "web",      "vm",       "office",     "note",
+              "game",    "gimp",    "dict",     "im" },
    layout = { layouts[3], layouts[1], layouts[1], layouts[1], layouts[1],
             layouts[1], layouts[1], layouts[1], layouts[2]
  }}
