@@ -153,6 +153,7 @@ mygamemenu = {
   { "Tuxtracer", "etracer" },
   { "Eboard", "eboard" },
   { "Nexuiz", "nexuiz" },
+  { "Minetest", "minetest" },
   { "LinCity NG", "lincity-ng" },
 }
 

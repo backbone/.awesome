@@ -49,6 +49,12 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "Texreport-gtk" },
       properties = { floating = true } },
+    { rule = { class = "etracer" },
+      properties = { tag = tags[1][6] } },
+    { rule = { class = "Eboard" },
+      properties = { tag = tags[1][6] } },
+    { rule = { class = "lincity-ng" },
+      properties = { tag = tags[1][6] } },
     -- XTerm на пятом и шестом теге первого экрана
     -- { rule = { class = "XTerm" }, callback = function(c) c:tags({tags[1][4], tags[1][6]}) end},
 }
