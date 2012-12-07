@@ -149,7 +149,7 @@ mydevmenu = {
   { "LabView-8.6", "labview-8.6" }
 }
 
-mygamesmenu = {
+mygamemenu = {
   { "Tuxtracer", "etracer" },
   { "Eboard", "eboard" },
   { "Nexuiz", "nexuiz" },
@@ -190,6 +190,7 @@ mymainmenu = awful.menu({ items = {
                                     { "dev", mydevmenu, beautiful.awesome_icon },
                                     { "draw", mydrawmenu, beautiful.awesome_icon },
                                     { "edit", myeditorsmenu, beautiful.awesome_icon },
+                                    { "game", mygamemenu, beautiful.awesome_icon },
                                     { "office", myofficemenu, beautiful.awesome_icon },
                                     { "utils", myutilsmenu, beautiful.awesome_icon },
                                     { "video", myvideo, beautiful.awesome_icon },
