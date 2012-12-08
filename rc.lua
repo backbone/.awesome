@@ -109,33 +109,33 @@ function lock_screen ()
 end
 
 mywebmenu = {
+  { "Evernote", "nixnote.sh" },
   { "Firefox", "firefox" },
   { "Pidgin", "pidgin" },
   { "Psi", "psi" },
-  { "Evernote", "nixnote.sh" }
 }
 
 mydrawmenu = {
   { "Dia", "dia --integrated" },
+  { "GColor", "gcolor2" },
   { "Gimp", "gimp" },
+  { "GQView", "gqview" },
   { "Inkscape", "inkscape" },
   { "Shotwell", "shotwell" },
-  { "GQView", "gqview" },
-  { "GColor", "gcolor2" }
 }
 
 myaudiomenu = {
-  { "Sonata", "sonata" }
+  { "Sonata", "sonata" },
 }
 
 myvideo = {
   { "Avidemux", "avidemux" },
-  { "RecordMyDesktop", "gtk-recordMyDesktop" }
+  { "RecordMyDesktop", "gtk-recordMyDesktop" },
 }
 
 myeditorsmenu = {
   { "GVim", "gvim" },
-  { "Oxygen", "oxygen" }
+  { "Oxygen", "oxygen" },
 }
 
 mydevmenu = {
@@ -146,43 +146,45 @@ mydevmenu = {
   { "DDD", "ddd" },
   { "Glade", "glade" },
   { "KCachegrind", "kcachegrind" },
-  { "LabView-8.6", "labview-8.6" }
+  { "LabView-8.6", "labview-8.6" },
 }
 
 mygamemenu = {
-  { "Tuxtracer", "etracer" },
+  { "0ad", "0ad" },
   { "Eboard", "eboard" },
+  { "LinCity NG", "lincity-ng" },
   { "Nexuiz", "nexuiz" },
   { "Minetest", "minetest" },
-  { "LinCity NG", "lincity-ng" },
+  { "Tuxtracer", "etracer" },
 }
 
 myofficemenu = {
-  { "LO Writer", "lowriter" },
+  { "Evince", "evince" },
+  { "LO Base", "lobase" },
   { "LO Calc", "localc" },
   { "LO Draw", "lodraw" },
-  { "LO Base", "lobase" },
   { "LO Math", "lomath" },
+  { "LO Writer", "lowriter" },
   { "LO Impress", "loimpress" },
+  { "LyX", "lyx" },
   { "Okular", "okular" },
-  { "Evince", "evince" },
   { "Stardict", "stardict" },
   { "Xchm", "xchm" },
   { "Xdvik", "xdvik" },
-  { "LyX", "lyx" }
 }
 
 myutilsmenu = {
   { "File-Roller", "file-roller" },
-  { "Xfburn", "xfburn" },
   { "GParted", "gksudo gparted" },
-  { "GTK-Theme", "gtk-chtheme" }
+  { "GTK-Theme", "gtk-chtheme" },
+  { "NVIDIA", "nvidia-settings" },
+  { "Xfburn", "xfburn" },
 }
 
 myvmmenu = {
-  { "VirtualBox", "VirtualBox" },
   { "AQemu", "aqemu" },
-  { "DosBox", "dosbox" }
+  { "DosBox", "dosbox" },
+  { "VirtualBox", "VirtualBox" },
 }
 
 mymainmenu = awful.menu({ items = {
