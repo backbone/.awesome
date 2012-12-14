@@ -53,6 +53,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][6] } },
     { rule = { class = "Eboard" },
       properties = { tag = tags[1][6] } },
+    { rule = { class = "charleygame-bin" },
+      properties = { tag = tags[1][6] } },
     { rule = { class = "lincity-ng" },
       properties = { tag = tags[1][6] } },
     -- XTerm на пятом и шестом теге первого экрана

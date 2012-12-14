@@ -152,6 +152,7 @@ mydevmenu = {
 mygamemenu = {
   { "0ad", "0ad" },
   { "Eboard", "eboard" },
+  { "Charley", "charleygame-bin.sh" },
   { "LinCity NG", "lincity-ng" },
   { "Nexuiz", "nexuiz" },
   { "Minetest", "minetest" },
