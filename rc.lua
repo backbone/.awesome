@@ -142,7 +142,7 @@ mydevmenu = {
   { "Alleyoop", "alleyoop" },
   { "Android DDMS", "ddms" },
   { "Android Update", "android" },
-  { "Anuta", "anjuta" },
+  { "Anjuta", "anjuta" },
   { "DDD", "ddd" },
   { "Glade", "glade" },
   { "KCachegrind", "kcachegrind" },
