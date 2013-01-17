@@ -147,6 +147,7 @@ mydevmenu = {
   { "Glade", "glade" },
   { "KCachegrind", "kcachegrind" },
   { "LabView-8.6", "labview-8.6" },
+  { "XML Spy", "wine '"..os.getenv("HOME").."/.wine/drive_c/Program Files/Altova/XMLSpy2005/XMLSpy.exe'" },
 }
 
 mygamemenu = {
