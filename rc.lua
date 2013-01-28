@@ -72,8 +72,6 @@ tags = {
      tags[s] = awful.tag(tags.names, s, tags.layout)
  end
 
-require("apprules")
-
 ----< Menu >----------------------------------------------------------
 -- Create a laucher widget and a main menu
 myawesomemenu = {
@@ -436,6 +434,8 @@ clientkeys = awful.util.table.join(
             c.maximized_vertical   = not c.maximized_vertical
         end)
 )
+
+require("apprules")
 
 -- Compute the maximum number of digit we need, limited to 9
 keynumber = 0
