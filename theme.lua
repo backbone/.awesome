@@ -97,10 +97,9 @@ theme.widget_mem = "~/.config/awesome/icons/16x16/mem.png"
 theme.widget_bat = "~/.config/awesome/icons/16x16/battery.png"
 theme.widget_vol = "~/.config/awesome/icons/16x16/vol-hi.png"
 theme.widget_wifi = "~/.config/awesome/icons/16x16/net-wifi.png"
-theme.widget_wifidown = "~/.config/awesome/icons/16x16/down.png"
-theme.widget_wifiup = "~/.config/awesome/icons/16x16/up.png"
+theme.widget_wifi_down_up = "~/.config/awesome/icons/16x16/down_up.png"
 theme.widget_wired = "~/.config/awesome/icons/16x16/net-wired.png"
-theme.widget_wiredup = "~/.config/awesome/icons/16x16/down_up.png"
+theme.widget_wired_down_up = "~/.config/awesome/icons/16x16/down_up.png"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=80

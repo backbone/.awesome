@@ -191,18 +191,16 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
  wifi_widget_down = widget({ type = "textbox" })
  wifi_widget_up = widget({ type = "textbox" })
  icon_wifi = widget({ type = "imagebox" })
- icon_wifidown = widget({ type = "imagebox" })
- icon_wifiup = widget({ type = "imagebox" })
+ icon_wifi_down_up = widget({ type = "imagebox" })
  icon_wifi.image = image(beautiful.widget_wifi)
- icon_wifidown.image = image(beautiful.widget_wifidown)
- icon_wifiup.image = image(beautiful.widget_wifiup)
+ icon_wifi_down_up.image = image(beautiful.widget_wifi_down_up)
  wired_widget_down = widget({ type = "textbox" })
  wired_widget_up = widget({ type = "textbox" })
  icon_wired = widget({ type = "imagebox" })
  icon_wireddown = widget({ type = "imagebox" })
- icon_wiredup = widget({ type = "imagebox" })
+ icon_wired_down_up = widget({ type = "imagebox" })
  icon_wired.image = image(beautiful.widget_wired)
- icon_wiredup.image = image(beautiful.widget_wiredup)
+ icon_wired_down_up.image = image(beautiful.widget_wired_down_up)
 
  bat_widget = widget({ type = "textbox" })
  bat_icon = widget({ type = "imagebox" })
@@ -313,8 +311,8 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
         volume_widget, vol_icon,
-        separator, wifi_widget_up, icon_wifiup, wifi_widget_down, icon_wifidown, icon_wifi,
-        separator, wired_widget_up, icon_wiredup, wired_widget_down, icon_wireddown, icon_wired,
+        separator, wifi_widget_up, icon_wifi_down_up, wifi_widget_down, icon_wifi,
+        separator, wired_widget_up, icon_wired_down_up, wired_widget_down, icon_wireddown, icon_wired,
         bat_widget, bat_icon,
         mem_widget, mem_icon,
         cpu_widget, cpu_icon,
