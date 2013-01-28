@@ -1,18 +1,13 @@
--- Standard awesome library
 require("awful")
 require("awful.autofocus")
 require("awful.rules")
--- Theme handling library
 require("beautiful")
--- Notification library
 require("naughty")
-
-require("autostart")
--- require("apps")
-require("volume")
 require("vicious")
+require("volume")
+require("autostart")
 
--- {{{ Error handling
+----< Error handling >------------------------------------------------
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
@@ -35,24 +30,19 @@ do
         in_error = false
     end)
 end
--- }}}
 
--- {{{ Variable definitions
+----< Theme >---------------------------------------------------------
 -- Themes define colours, icons, and wallpapers
 beautiful.init(".config/awesome/theme.lua")
 
+----< Variables >-----------------------------------------------------
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt -tr +sb"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
-
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod1"
 
+----< Table of layouts >----------------------------------------------
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
@@ -69,44 +59,33 @@ layouts =
 --    awful.layout.suit.spiral.dwindle,
 --    awful.layout.suit.magnifier
 }
--- }}}
 
--- -- {{{ Tags
--- -- Define a tag table which hold all screen tags.
--- tags = {}
--- for s = 1, screen.count() do
---     -- Each screen has its own tag table.
---     tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
--- end
--- -- }}}
--- {{{ Tags
- -- Define a tag table which will hold all screen tags.
- tags = {
-   names  = { "term",     "web",      "vm",       "office",     "note",
-              "game",    "gimp",    "dict",     "im" },
-   layout = { layouts[3], layouts[1], layouts[1], layouts[1], layouts[1],
-            layouts[1], layouts[1], layouts[1], layouts[2]
- }}
+----< Tags >----------------------------------------------------------
+tags = {
+   names  = { "term",      "web",      "vm",       "office",   "note",
+              "game",      "gimp",     "dict",     "im" },
+   layout = { layouts[3],  layouts[1], layouts[1], layouts[1], layouts[1],
+              layouts[1],  layouts[1], layouts[1], layouts[2]}
+}
  for s = 1, screen.count() do
      -- Each screen has its own tag table.
      tags[s] = awful.tag(tags.names, s, tags.layout)
  end
--- }}}
 
--- {{{ Menu
+require("apprules")
+
+----< Menu >----------------------------------------------------------
 -- Create a laucher widget and a main menu
 myawesomemenu = {
-   { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "xscreensaver", "xscreensaver-demo" },
-   { "restart", awesome.restart },
+   { "hibernate", "gksudo hibernate" },
    { "lock", "xscreensaver-command --lock" },
-   { "quit", awesome.quit }
+   { "manual", terminal .. " -e man awesome" },
+   { "quit", awesome.quit },
+   { "restart", awesome.restart },
+   { "reboot", "gksudo reboot" },
+   { "xscreensaver", "xscreensaver-demo" },
 }
-
-function lock_screen ()
-  os.execute ("xscreensaver-command --lock")
-end
 
 mywebmenu = {
   { "Evernote", "nixnote.sh" },
@@ -209,10 +188,8 @@ mymainmenu = awful.menu({ items = {
 
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
--- }}}
 
--- {{{ Wibox
- --  My widgets
+----< Wibox >----------------------------------------------------------
  wifi_widget_down = widget({ type = "textbox" })
  wifi_widget_up = widget({ type = "textbox" })
  icon_wifi = widget({ type = "imagebox" })
@@ -349,17 +326,16 @@ for s = 1, screen.count() do
         layout = awful.widget.layout.horizontal.rightleft
     }
 end
--- }}}
 
--- {{{ Mouse bindings
+----< Mouse bindings >------------------------------------------------
+
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
--- }}}
 
--- {{{ Key bindings
+----< Key bindings >--------------------------------------------------
 globalkeys = awful.util.table.join(
     -- Volume control --
     awful.key({ modkey }, ".", function ()
@@ -411,7 +387,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     -- awful.key({ modkey, "Shift"   }, "q", awesome.quit),
-    awful.key({ modkey, "Control"   }, "l", lock_screen),
+    awful.key({ modkey, "Control"   }, "l", function () os.execute ("xscreensaver-command --lock") end),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -507,11 +483,8 @@ clientbuttons = awful.util.table.join(
 
 -- Set keys
 root.keys(globalkeys)
--- }}}
 
-require("apprules")
-
--- {{{ Signals
+----< Signals >------------------------------------------------------
 -- Signal function to execute when a new client appears.
 client.add_signal("manage", function (c, startup)
     -- Add a titlebar
@@ -540,5 +513,3 @@ end)
 
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
--- }}}
-
