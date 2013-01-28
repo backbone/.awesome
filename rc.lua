@@ -202,7 +202,6 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
  icon_wireddown = widget({ type = "imagebox" })
  icon_wiredup = widget({ type = "imagebox" })
  icon_wired.image = image(beautiful.widget_wired)
- icon_wireddown.image = image(beautiful.widget_wireddown)
  icon_wiredup.image = image(beautiful.widget_wiredup)
 
  bat_widget = widget({ type = "textbox" })
