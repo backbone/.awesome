@@ -155,6 +155,7 @@ myofficemenu = {
 
 myutilsmenu = {
   { "File-Roller", "file-roller" },
+  { "GConf-editor", "gconf-editor" },
   { "GParted", "gksudo gparted" },
   { "GTK-Theme", "gtk-chtheme" },
   { "NVIDIA", "nvidia-settings" },
