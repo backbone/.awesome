@@ -432,7 +432,6 @@ clientkeys = awful.util.table.join(
         end)
 )
 
-require("apprules")
 
 -- Compute the maximum number of digit we need, limited to 9
 keynumber = 0
@@ -477,6 +476,8 @@ clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 3, awful.mouse.client.resize))
+
+require("apprules")
 
 -- Set keys
 root.keys(globalkeys)
