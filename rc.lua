@@ -107,7 +107,7 @@ myaudiomenu = {
 }
 
 myvideo = {
-  { "Avidemux", "avidemux" },
+  { "Avidemux", "avidemux2_gtk" },
   { "RecordMyDesktop", "gtk-recordMyDesktop" },
 }
 
