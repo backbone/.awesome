@@ -15,6 +15,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][3] } },
     { rule = { class = "Remmina" },
       properties = { tag = tags[1][3] } },
+    { rule = { class = "Spicy" },
+      properties = { tag = tags[1][3] } },
     { rule = { class = "Aqemu" },
       properties = { tag = tags[1][3] } },
     { rule = { class = "Soffice" },

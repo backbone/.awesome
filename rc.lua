@@ -91,6 +91,7 @@ mywebmenu = {
   { "Pidgin", "pidgin" },
   { "Psi", "psi" },
   { "Remmina", "remmina" },
+  { "Spicy", "spicy" },
 }
 
 mydrawmenu = {
