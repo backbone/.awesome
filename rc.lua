@@ -75,6 +75,7 @@ tags = {
 ----< Menu >----------------------------------------------------------
 -- Create a laucher widget and a main menu
 myawesomemenu = {
+   { "next wall", "awsetbg -r "..os.getenv("HOME").."/wallpapers" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "hibernate", "gksudo hibernate" },
    { "lock", "xscreensaver-command --lock" },
