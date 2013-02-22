@@ -93,6 +93,7 @@ mywebmenu = {
   { "Psi", "psi" },
   { "Remmina", "remmina" },
   { "Spicy", "spicy" },
+  { "Thunderbird", "thunderbird-bin" },
 }
 
 mydrawmenu = {
