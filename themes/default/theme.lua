@@ -110,7 +110,8 @@ theme.awesome_icon = home_path .. '.config/awesome/themes/default/icon/awesome16
 theme.arch_icon = home_path .. '.config/awesome/themes/default/icon/Arch.png'
 
 -- {{{ Widgets
-theme.widget_disk = awful.util.getdir("config") .. "/themes/default/widgets/disk.png"
+-- theme.widget_disk = awful.util.getdir("config") .. "/themes/default/widgets/disk.png"
+theme.widget_disk = "/home/kolan/.config/awesome/Icons/16x16/hdd_clear.png"
 theme.widget_cpu = awful.util.getdir("config") .. "/themes/default/widgets/cpu.png"
 theme.widget_ac = awful.util.getdir("config") .. "/themes/default/widgets/ac.png"
 theme.widget_acblink = awful.util.getdir("config") .. "/themes/default/widgets/acblink.png"

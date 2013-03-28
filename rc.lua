@@ -277,6 +277,8 @@ for s = 1, screen.count() do
     --right_layout:add(spacer)
     right_layout:add(memicon)
     right_layout:add(mem)
+    right_layout:add(diskicon)
+    right_layout:add(disk)
     --right_layout:add(spacer)
     --right_layout:add(weatheric)
     --right_layout:add(weather)

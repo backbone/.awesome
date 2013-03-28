@@ -173,6 +173,15 @@ memicon:set_image(beautiful.widget_ram)
 mem = wibox.widget.textbox()
 vicious.register(mem, vicious.widgets.mem, " $1/$5% ", 2)
 -- End Mem }}}
+
+-- {{{ Start Mem
+diskicon = wibox.widget.imagebox()
+diskicon:set_image(beautiful.widget_disk)
+--
+disk = wibox.widget.textbox()
+vicious.register(disk, vicious.widgets.fs, "${/home avail_gb}Gb ", 15)
+-- End Mem }}}
+
 --
 -- {{{ Start Gmail 
 --mailicon = wibox.widget.imagebox(beautiful.widget_mail)

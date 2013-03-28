@@ -9,7 +9,7 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
-beautiful.init("/home/rat/.config/awesome/themes/default/theme.lua")
+-- beautiful.init("/home/kolan/.config/awesome/themes/default/theme.lua")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
