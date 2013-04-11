@@ -530,6 +530,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][3] } },
     { rule = { class = "Soffice" },
       properties = { floating = false, tag = tags[1][4] } },
+    { rule = { class = "LibreOffice" },
+      properties = { floating = false, tag = tags[1][4] } },
     { rule = { class = "libreoffice-writer" },
       properties = { floating = false, tag = tags[1][4] } },
     { rule = { class = "libreoffice-calc" },
