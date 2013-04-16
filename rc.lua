@@ -503,6 +503,13 @@ clientbuttons = awful.util.table.join(
     awful.button({ modkey }, 3, awful.mouse.client.resize)
 )
 
+-- PrintScreen keys --
+globalkeys = awful.util.table.join(globalkeys,
+        awful.key({        }, "Print",
+                  function () awful.util.spawn_with_shell ("DATE=`date +%d%m%Y_%H%M%S`;"..
+                      "xsnap -nogui -file $HOME/screenshots/xsnap$DATE && gqview -r $HOME/screenshots/xsnap$DATE.png") end)
+)
+
 -- Set keys
 root.keys(globalkeys)
 
