@@ -151,7 +151,7 @@ cpu = wibox.widget.textbox()
 cpu.fit = function (box,w,h)
   return 30,0
 end
-vicious.register(cpu, vicious.widgets.cpu, " $1%", 2)
+vicious.register(cpu, vicious.widgets.cpu, '<span color="#677ecc"> $1%</span>', 2)
 -- End CPU }}}
 --{{ Disk Usage
 -- Disk usage widget
@@ -171,7 +171,7 @@ memicon = wibox.widget.imagebox()
 memicon:set_image(beautiful.widget_ram)
 --
 mem = wibox.widget.textbox()
-vicious.register(mem, vicious.widgets.mem, " $1/$5% ", 2)
+vicious.register(mem, vicious.widgets.mem, '<span color="#639150"> $1/$5% </span>', 2)
 -- End Mem }}}
 
 -- {{{ Start Mem
@@ -179,7 +179,7 @@ diskicon = wibox.widget.imagebox()
 diskicon:set_image(beautiful.widget_disk)
 --
 disk = wibox.widget.textbox()
-vicious.register(disk, vicious.widgets.fs, "${/home avail_gb}Gb ", 15)
+vicious.register(disk, vicious.widgets.fs, '<span color="#cc7c4b">${/home avail_gb}Gb </span>', 15)
 -- End Mem }}}
 
 --

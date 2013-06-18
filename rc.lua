@@ -237,10 +237,10 @@ icon_wired:set_image (beautiful.widget_wired)
 icon_wired_down_up:set_image (beautiful.widget_wired_down_up)
 
 vicious.cache(vicious.widgets.net)
-vicious.register(wifi_widget_down, vicious.widgets.net, '<span color="#7F9F7F">${wlan0 down_mb}</span>', 2)
-vicious.register(wifi_widget_up, vicious.widgets.net, '<span color="#CC9393">${wlan0 up_mb}</span>', 2)
-vicious.register(wired_widget_down, vicious.widgets.net, '<span color="#7F9F7F">${eth0 down_mb}</span>', 2)
-vicious.register(wired_widget_up, vicious.widgets.net, '<span color="#CC9393">${eth0 up_mb}</span>', 2)
+vicious.register(wifi_widget_down, vicious.widgets.net, '<span color="#baa53f">${wlan0 down_mb}</span>', 2)
+vicious.register(wifi_widget_up, vicious.widgets.net, '<span color="#b165bd">${wlan0 up_mb}</span>', 2)
+vicious.register(wired_widget_down, vicious.widgets.net, '<span color="#baa53f">${eth0 down_mb}</span>', 2)
+vicious.register(wired_widget_up, vicious.widgets.net, '<span color="#b165bd">${eth0 up_mb}</span>', 2)
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
