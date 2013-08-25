@@ -529,6 +529,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][2] } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][2] } },
+    { rule = { class = "Liferea" },
+      properties = { tag = tags[1][2] } },
     { rule = { class = "VirtualBox" },
       properties = { tag = tags[1][3] } },
     { rule = { class = "Remmina" },
