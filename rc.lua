@@ -222,6 +222,26 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+-- My MyMail updater widget
+function mymail_count()
+    os.execute("~/.config/awesome/mymail_unread.py > ~/.mymail_count")
+    local f = io.open(os.getenv("HOME") .. "/.mymail_count")
+    local l = nil
+    if f ~= nil then
+          l = f:read()
+    else
+          l = "?"
+    end
+    f:close()
+    return l
+end
+mymail_mail = wibox.widget.textbox( mymail_count() )
+mymail_mail.timer = timer{timeout=60}
+mymail_mail.timer:connect_signal("timeout", function () mymail_mail:set_text ( mymail_count() ) end)
+mymail_mail.timer:start()
+mymailicon = wibox.widget.imagebox()
+mymailicon:set_image(beautiful.widget_mymail)
+
 -- My GMail updater widget
 function gmail_count()
     os.execute("~/.config/awesome/gmail_unread.py > ~/.gmail_count")
@@ -294,6 +314,9 @@ for s = 1, screen.count() do
 
     right_layout:add(spacer)
     right_layout:add(mymailicon)
+    right_layout:add(mymail_mail)
+    myslash = wibox.widget.textbox("+")
+    right_layout:add(myslash)
     right_layout:add(gmail_mail)
 
     right_layout:add(spacer)
