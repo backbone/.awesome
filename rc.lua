@@ -222,6 +222,26 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+-- My GMail updater widget
+function gmail_count()
+    os.execute("~/.config/awesome/gmail_unread.py > ~/.gmail_count")
+    local f = io.open(os.getenv("HOME") .. "/.gmail_count")
+    local l = nil
+    if f ~= nil then
+          l = f:read()
+    else
+          l = "?"
+    end
+    f:close()
+    return l
+end
+gmail_mail = wibox.widget.textbox( gmail_count() )
+gmail_mail.timer = timer{timeout=60}
+gmail_mail.timer:connect_signal("timeout", function () gmail_mail:set_text ( gmail_count() ) end)
+gmail_mail.timer:start()
+mymailicon = wibox.widget.imagebox()
+mymailicon:set_image(beautiful.widget_mymail)
+
 -- Wi-Fi / Ethernet widgets
 wifi_widget_down = wibox.widget.textbox()
 wifi_widget_up = wibox.widget.textbox()
@@ -271,6 +291,11 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+
+    right_layout:add(spacer)
+    right_layout:add(mymailicon)
+    right_layout:add(gmail_mail)
+
     right_layout:add(spacer)
     right_layout:add(cpuicon)
     right_layout:add(cpu)
