@@ -99,7 +99,7 @@ naughty.config.defaults.hover_timeout = nil
 ----< Tags >----------------------------------------------------------
 --
 tags = {
-   names  = { "term",      "web",      "vm",       "office",   "note",
+   names  = { "term",      "web",      "vm",       "office",   "mail",
               "game",      "gimp",     "dict",     "im" },
    layout = { layouts[3],  layouts[1], layouts[1], layouts[1], layouts[1],
               layouts[1],  layouts[1], layouts[1], layouts[2]}
@@ -529,6 +529,8 @@ awful.rules.rules = {
       callback = function(c) awful.client.movetotag(tags[mouse.screen][2], c) end },
     { rule = { class = "Thunderbird" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][2], c) end },
+    { rule = { class = "Geary" },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][5], c) end },
     { rule = { class = "Liferea" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][2], c) end },
     { rule = { class = "VirtualBox" },
