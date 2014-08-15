@@ -85,10 +85,6 @@ vicious.register(cpu, vicious.widgets.cpu, '<span color="#677ecc"> $1%</span>', 
 
 ----< Disk Usage >----------------------------------------------------
 --
-diskwidget = wibox.widget.textbox()
-diskwidget:set_text("test")
-disk = require("diskusage")
-disk.addToWidget(diskwidget, 75, 90, false)
 diskicon = wibox.widget.imagebox()
 diskicon:set_image(beautiful.widget_disk)
 disk = wibox.widget.textbox()
