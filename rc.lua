@@ -240,14 +240,14 @@ end
 mymail_mail = wibox.widget.textbox( "?" )
 mymail_mail.timer = timer{timeout=20}
 mymail_mail.timer:connect_signal("timeout",
-    function () mymail_mail:set_text ( mail_count(os.getenv("HOME") .. "/.mymail_count") ) end)
+    function () mymail_mail:set_text ( mail_count("/tmp/"..os.getenv("USERNAME").."-mail_loop".."/mymail_count") ) end)
 mymail_mail.timer:start()
 mymailicon = wibox.widget.imagebox()
 mymailicon:set_image(beautiful.widget_mymail)
 gmail_mail = wibox.widget.textbox( "?" )
 gmail_mail.timer = timer{timeout=20}
 gmail_mail.timer:connect_signal("timeout",
-    function () gmail_mail:set_text ( mail_count(os.getenv("HOME") .. "/.gmail_count") ) end)
+    function () gmail_mail:set_text ( mail_count("/tmp/"..os.getenv("USERNAME").."-mail_loop".."/gmail_count") ) end)
 gmail_mail.timer:start()
 mymailicon = wibox.widget.imagebox()
 mymailicon:set_image(beautiful.widget_mymail)
