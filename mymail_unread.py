@@ -16,17 +16,18 @@ def IMAP_starttls(self, keyfile=None, certfile=None,cert_reqs=ssl.CERT_NONE,ca_c
 imaplib.IMAP4.__dict__['starttls']=IMAP_starttls
 imaplib.Commands['STARTTLS']=('NONAUTH',)
 
-# read credentials
-from credentials import mymail_server,mymail_port,mymail_login,mymail_password
+try:
+    # read credentials
+    from credentials import mymail_server,mymail_port,mymail_login,mymail_password
 
-M=imaplib.IMAP4(mymail_server, mymail_port)
-M.starttls()
-M.login(mymail_login,mymail_password)
+    M=imaplib.IMAP4(mymail_server, mymail_port)
+    M.starttls()
+    M.login(mymail_login,mymail_password)
 
-status, counts = M.status("Inbox","(MESSAGES UNSEEN)")
+    status, counts = M.status("Inbox","(MESSAGES UNSEEN)")
 
-unread = counts[0].split()[4][:-1]
-
-print(int(unread))
-
-M.logout()
+    unread = counts[0].split()[4][:-1]
+    M.logout()
+    print(int(unread))
+except:
+    print("?")

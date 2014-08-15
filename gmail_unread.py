@@ -4,15 +4,13 @@
 
 import imaplib
 
-#default imap port is 993, change otherwise
-M=imaplib.IMAP4_SSL("imap.gmail.com", 993)
-from credentials import gmail_login,gmail_password
-M.login(gmail_login,gmail_password)
-
-status, counts = M.status("Inbox","(MESSAGES UNSEEN)")
-
-unread = counts[0].split()[4][:-1]
-
-print(int(unread))
-
-M.logout()
+try:
+    from credentials import gmail_login,gmail_password
+    M=imaplib.IMAP4_SSL("imap.gmail.com", 993)
+    M.login(gmail_login,gmail_password)
+    status, counts = M.status("Inbox","(MESSAGES UNSEEN)")
+    unread = counts[0].split()[4][:-1]
+    M.logout()
+    print(int(unread))
+except:
+    print("?")
