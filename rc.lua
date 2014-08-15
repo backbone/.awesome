@@ -222,42 +222,32 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
--- My MyMail updater widget
-function mymail_count()
-    os.execute("~/.config/awesome/mymail_unread.py > ~/.mymail_count")
-    local f = io.open(os.getenv("HOME") .. "/.mymail_count")
+-- My Mail updater widget
+function mail_count(filename)
+    local f = io.open(filename)
     local l = nil
     if f ~= nil then
           l = f:read()
+          if l == nil then
+              l = "?"
+          end
     else
           l = "?"
     end
     f:close()
     return l
 end
-mymail_mail = wibox.widget.textbox( mymail_count() )
-mymail_mail.timer = timer{timeout=60}
-mymail_mail.timer:connect_signal("timeout", function () mymail_mail:set_text ( mymail_count() ) end)
+mymail_mail = wibox.widget.textbox( "?" )
+mymail_mail.timer = timer{timeout=20}
+mymail_mail.timer:connect_signal("timeout",
+    function () mymail_mail:set_text ( mail_count(os.getenv("HOME") .. "/.mymail_count") ) end)
 mymail_mail.timer:start()
 mymailicon = wibox.widget.imagebox()
 mymailicon:set_image(beautiful.widget_mymail)
-
--- My GMail updater widget
-function gmail_count()
-    os.execute("~/.config/awesome/gmail_unread.py > ~/.gmail_count")
-    local f = io.open(os.getenv("HOME") .. "/.gmail_count")
-    local l = nil
-    if f ~= nil then
-          l = f:read()
-    else
-          l = "?"
-    end
-    f:close()
-    return l
-end
-gmail_mail = wibox.widget.textbox( gmail_count() )
-gmail_mail.timer = timer{timeout=60}
-gmail_mail.timer:connect_signal("timeout", function () gmail_mail:set_text ( gmail_count() ) end)
+gmail_mail = wibox.widget.textbox( "?" )
+gmail_mail.timer = timer{timeout=20}
+gmail_mail.timer:connect_signal("timeout",
+    function () gmail_mail:set_text ( mail_count(os.getenv("HOME") .. "/.gmail_count") ) end)
 gmail_mail.timer:start()
 mymailicon = wibox.widget.imagebox()
 mymailicon:set_image(beautiful.widget_mymail)
