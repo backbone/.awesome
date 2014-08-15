@@ -3,16 +3,13 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local vicious = require("vicious")
 local naughty = require("naughty")
---local disk = require("diskusage")
 
--- {{{ BATTERY
--- Battery attributes
+----< Battery >-------------------------------------------------------
+--
 local bat_state  = ""
 local bat_charge = 0
 local bat_time   = 0
 local blink      = true
-
--- Icon
 baticon = wibox.widget.imagebox()
 baticon:set_image(beautiful.widget_batfull)
 
@@ -46,7 +43,6 @@ vicious.register(batpct, vicious.widgets.bat, function(widget, args)
   return args[2] .. "% "
 end, nil, "BAT0")
 
--- Buttons
 function popup_bat()
   local state = ""
   if bat_state == "↯" then
@@ -68,164 +64,39 @@ function popup_bat()
 end
 batpct:buttons(awful.util.table.join(awful.button({ }, 1, popup_bat)))
 baticon:buttons(batpct:buttons())
--- End Battery}}}
+
+----< Volume >--------------------------------------------------------
 --
--- {{{ PACMAN
--- Icon
-pacicon = wibox.widget.imagebox()
-pacicon:set_image(beautiful.widget_pac)
---
--- Upgrades
-pacwidget = wibox.widget.textbox()
-vicious.register(pacwidget, vicious.widgets.pkg, function(widget, args)
-  if args[1] > 0 then
-  pacicon:set_image(beautiful.widget_pacnew)
- else
-   pacicon:set_image(beautiful.widget_pac)
- end
- return args[1]
- end, 1801, "Arch S") -- Arch S for ignorepkg
---
--- Buttons
---  function popup_pac()
---  local pac_updates = ""
---  local f = io.popen("pacman -Sup --dbpath /tmp/pacsync")
---  if f then
---  pac_updates = f:read("*a"):match(".*/(.*)-.*\n$")
---  end
---  f:close()
---  if not pac_updates then
---  pac_updates = "System is up to date"
---  end
---  naughty.notify { text = pac_updates }
---  end
---  pacwidget:buttons(awful.util.table.join(awful.button({ }, 1, popup_pac)))
---  pacicon:buttons(pacwidget:buttons())
--- End Pacman }}}
---
--- {{{ VOLUME
--- Cache
 vicious.cache(vicious.widgets.volume)
---
--- Icon
 volicon = wibox.widget.imagebox()
 volicon:set_image(beautiful.widget_vol)
---
-
--- Volume %
 volpct = wibox.widget.textbox()
 vicious.register(volpct, vicious.widgets.volume, "$1% ", nil, "Master")
+
+----< CPU >-----------------------------------------------------------
 --
--- Buttons
---volicon:buttons(awful.util.table.join(
-     --awful.button({ }, 1,
-     --function() awful.util.spawn_with_shell("amixer -c 0 -q set Master toggle") end),
-     --awful.button({ }, 4,
-     --function() awful.util.spawn_with_shell("amixer -c 0 -q set Master 3%+ unmute") end),
-     --awful.button({ }, 5,
-    -- function() awful.util.spawn_with_shell("amixer --c 0 q set Master 3%- unmute") end)
-           -- ))
-  --   volpct:buttons(volicon:buttons())
---     volspace:buttons(volicon:buttons())
- -- End Volume }}}
- --
-
---Weather Image--
---weatheric = wibox.widget.textbox()
---weatheric:set_text("☂ ")
-
----Weather Widget
---weather = wibox.widget.textbox()
---weather_box = awful.tooltip({ objects = { weather },})
---vicious.register(weather, vicious.widgets.weather,
---   function(widgets, args)
---   weather_box:set_text("City: ".. args["{city}"] .. "\nSky: " .. args["{sky}"] .. "\nHumidity: " .. args["{humid}"] .. "%" .. "\nWind: " .. args["{windmph}"] .. " MP/h") return args["{tempf}"].." ℉" end, 
---   1200, "KIND")
-  ---Change KLOU to yours
-
--- {{{ Start CPU
 cpuicon = wibox.widget.imagebox()
 cpuicon:set_image(beautiful.widget_cpu)
---
 cpu = wibox.widget.textbox()
 cpu.fit = function (box,w,h)
   return 30,0
 end
 vicious.register(cpu, vicious.widgets.cpu, '<span color="#677ecc"> $1%</span>', 2)
--- End CPU }}}
---{{ Disk Usage
--- Disk usage widget
+
+----< Disk Usage >----------------------------------------------------
+--
 diskwidget = wibox.widget.textbox()
---diskwidget.set_image("/home/rat/.config/awesome/du.png")
 diskwidget:set_text("test")
 disk = require("diskusage")
--- the first argument is the widget to trigger the diskusage
--- the second/third is the percentage at which a line gets orange/red
--- true = show only local filesystems
 disk.addToWidget(diskwidget, 75, 90, false)
---
-
---
--- {{{ Start Mem
-memicon = wibox.widget.imagebox()
-memicon:set_image(beautiful.widget_ram)
---
-mem = wibox.widget.textbox()
-vicious.register(mem, vicious.widgets.mem, '<span color="#639150"> $1/$5% </span>', 2)
--- End Mem }}}
-
--- {{{ Start Mem
 diskicon = wibox.widget.imagebox()
 diskicon:set_image(beautiful.widget_disk)
---
 disk = wibox.widget.textbox()
 vicious.register(disk, vicious.widgets.fs, '<span color="#cc7c4b">${/home avail_gb}Gb </span>', 15)
--- End Mem }}}
 
+----< Memory Usage >--------------------------------------------------
 --
--- {{{ Start Gmail 
---mailicon = wibox.widget.imagebox(beautiful.widget_mail)
---mailwidget = wibox.widget.textbox()
---gmail_t = awful.tooltip({ objects = { mailwidget },})
---vicious.register(mailwidget, vicious.widgets.gmail,
---        function (widget, args)
---        gmail_t:set_text(args["{subject}"])
---        gmail_t:add_to_object(mailicon)
---            return args["{count}"]
---                 end, 120) 
---
---     mailicon:buttons(awful.util.table.join(
---         awful.button({ }, 1, function () awful.util.spawn("urxvt -e mutt", false) end)
---     ))
--- End Gmail }}}
---
---- {{{ Start Network Monitor
---Network Icon ↑
---netwidgeticon = wibox.widget.textbox()
---netwidgeticon:set_text("Network ↑: ")
----- Network widget
---netwidget = awful.widget.graph()
---netwidget:set_width(15)
---netwidget:set_height(3)
---netwidget:set_background_color("#494B4F")
---netwidget:set_color("#FF5656")
-----netwidget:set_colors({type = "linear" , from = {0, 0}, stops = ({0, "} , (0.5, "} , {1, } }})
---netwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#FF5656"}, { 0.5, "#88A175" }, { 1, "#AECF96" } }})
---netwidget_t = awful.tooltip({ objects = { netwidget.widget },})
---vicious.register(netwidget, vicious.widgets.net,
---                    function (widget, args)
---                        netwidget_t:set_text("Network download: " .. args["{eth0 down_kb}"] .. "mb/s")
---                        return args["{eth0 down_kb}"]
---                    end)
---
--- End Network Monitor }}
----
-
-
--- {{{ Start Wifi
---wifiicon = wibox.widget.imagebox()
---wifiicon:set_image(beautiful.widget_wifi)
-----
---wifi = wibox.widget.textbox()
---vicious.register(wifi, vicious.widgets.wifi, "${ssid} Rate: ${rate}MB/s Link: ${link}%", 3, "wlan0")
--- End Wifi }}}
+memicon = wibox.widget.imagebox()
+memicon:set_image(beautiful.widget_ram)
+mem = wibox.widget.textbox()
+vicious.register(mem, vicious.widgets.mem, '<span color="#639150"> $1/$5% </span>', 2)
