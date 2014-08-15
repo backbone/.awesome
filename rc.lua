@@ -1,20 +1,27 @@
 ----< Includes >------------------------------------------------------
 --
 -- Standard awesome library
-local gears = require("gears")
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
--- Widget and layout library
 local wibox = require("wibox")
--- Autostart
 require("autostart")
+
+----< Variables >-----------------------------------------------------
+--
+local home = os.getenv("HOME")
+local cfgpath = home.."/.config/awesome"
+local username = os.getenv("USERNAME")
+local terminal = "urxvt -tr +sb"
+local editor = os.getenv("EDITOR") or "vim"
+local editor_cmd = terminal .. " -e " .. editor
+local modkey = "Mod1"
 
 ----< Theme >---------------------------------------------------------
 --
 -- Theme handling library
 local beautiful = require("beautiful")
-beautiful.init(os.getenv("HOME").."/.config/awesome/themes/default/theme.lua")
+beautiful.init(cfgpath.."/themes/default/theme.lua")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -23,14 +30,10 @@ require('freedesktop.utils')
 require('freedesktop.menu')
 freedesktop.utils.icon_theme = 'gnome'
 --Vicious + Widgets 
-vicious = require("vicious")
+local vicious = require("vicious")
 local wi = require("wi")
-local html = require("html")
 
 ----< Error handling >------------------------------------------------
---
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = "Oops, there were errors during startup!",
@@ -44,21 +47,12 @@ do
         -- Make sure we don't go into an endless error loop
         if in_error then return end
         in_error = true
-
         naughty.notify({ preset = naughty.config.presets.critical,
                          title = "Oops, an error happened!",
                          text = err })
         in_error = false
     end)
 end
-
-----< Variables >-----------------------------------------------------
---
--- This is used later as the default terminal and editor to run.
-terminal = "urxvt -tr +sb"
-editor = os.getenv("EDITOR") or "vim"
-editor_cmd = terminal .. " -e " .. editor
-modkey = "Mod1"
 
 ----< Table of layouts >----------------------------------------------
 --
@@ -99,9 +93,9 @@ naughty.config.defaults.hover_timeout = nil
 ----< Tags >----------------------------------------------------------
 --
 tags = {
-   names  = { "term",      "web",      "vm",       "office",   "mail",
-              "game",      "gimp",     "dict",     "im" },
-   layout = { layouts[3],  layouts[1], layouts[1], layouts[1], layouts[1],
+   names  = { "1www",     "2rxvt",   "3virt",   "4office",   "5mail",
+              "6game",    "7gimp",   "8dic",    "9im" },
+   layout = { layouts[1],  layouts[3], layouts[1], layouts[1], layouts[1],
               layouts[1],  layouts[1], layouts[1], layouts[2]}
 }
  for s = 1, screen.count() do
@@ -109,39 +103,11 @@ tags = {
      tags[s] = awful.tag(tags.names, s, tags.layout)
  end
 
-----< Wallpaper >-----------------------------------------------------
---
-local wallpaper = require("wallpaper")
-
---
---if beautiful.wallpaper then
---    for s = 1, screen.count() do
---        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
---    end
---end
-
----- Wallpaper Changer Based On 
----- menu icon menu pdq 07-02-2012
--- local wallmenu = {}
--- local function wall_load(wall)
--- local f = io.popen('ln -sfn ' .. home_path .. '.config/awesome/wallpaper/' .. wall .. ' ' .. home_path .. '.config/awesome/themes/default/bg.png')
--- awesome.restart()
--- end
--- local function wall_menu()
--- local f = io.popen('ls -1 ' .. home_path .. '.config/awesome/wallpaper/')
--- for l in f:lines() do
---local item = { l, function () wall_load(l) end }
--- table.insert(wallmenu, item)
--- end
--- f:close()
--- end
--- wall_menu()
-
 ----< Menu >----------------------------------------------------------
 --
 menu_items = freedesktop.menu.new()
 myawesomemenu = {
-   { "next wall", os.getenv("HOME").."/.config/awesome/set_wall.sh "..os.getenv("HOME").."/wallpapers/" },
+   { "next wall", cfgpath.."/set_wall.sh "..home.."/wallpapers/" },
    { "hibernate", "gksudo hibernate" },
    { "lock", "xscreensaver-command --lock" },
    { "reboot", "gksudo reboot" },
@@ -158,27 +124,18 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 ----< Widgets >-------------------------------------------------------
 -- 
-spacer       = wibox.widget.textbox()
+local spacer = wibox.widget.textbox()
 spacer:set_text(' ')
 
---spacer2       = wibox.widget.textbox()
---spacer2:set_text(' ')
-
---Battery Widget
---batt = wibox.widget.textbox()
---vicious.register(batt, vicious.widgets.bat, "$2% $3 ", 61, "BAT0")
-
-
--- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock()
+local mytextclock = awful.widget.textclock()
 
 -- Create a wibox for each screen and add it
-mywibox = {}
-myinfowibox = {}
-mypromptbox = {}
-mylayoutbox = {}
-mytaglist = {}
+local mywibox = {}
+local myinfowibox = {}
+local mypromptbox = {}
+local mylayoutbox = {}
+local mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 1, awful.tag.viewonly),
                     awful.button({ modkey }, 1, awful.client.movetotag),
@@ -187,7 +144,7 @@ mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 5, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
                     awful.button({ }, 4, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
                     )
-mytasklist = {}
+local mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
                      awful.button({ }, 1, function (c)
                                               if c == client.focus then
@@ -237,32 +194,31 @@ function mail_count(filename)
     f:close()
     return l
 end
-mymail_mail = wibox.widget.textbox( "?" )
+local mail_tmp_path = "/tmp/"..username.."-mail_loop"
+local mailicon = wibox.widget.imagebox()
+mailicon:set_image(beautiful.widget_mailnew)
+local mymail_mail = wibox.widget.textbox( "?" )
 mymail_mail.timer = timer{timeout=20}
 mymail_mail.timer:connect_signal("timeout",
-    function () mymail_mail:set_text ( mail_count("/tmp/"..os.getenv("USERNAME").."-mail_loop".."/mymail_count") ) end)
+    function () mymail_mail:set_text ( mail_count(mail_tmp_path.."/mymail_count") ) end)
 mymail_mail.timer:start()
-mymailicon = wibox.widget.imagebox()
-mymailicon:set_image(beautiful.widget_mymail)
-gmail_mail = wibox.widget.textbox( "?" )
+local gmail_mail = wibox.widget.textbox( "?" )
 gmail_mail.timer = timer{timeout=20}
 gmail_mail.timer:connect_signal("timeout",
-    function () gmail_mail:set_text ( mail_count("/tmp/"..os.getenv("USERNAME").."-mail_loop".."/gmail_count") ) end)
+    function () gmail_mail:set_text ( mail_count(mail_tmp_path.."/gmail_count") ) end)
 gmail_mail.timer:start()
-mymailicon = wibox.widget.imagebox()
-mymailicon:set_image(beautiful.widget_mymail)
 
 -- Wi-Fi / Ethernet widgets
-wifi_widget_down = wibox.widget.textbox()
-wifi_widget_up = wibox.widget.textbox()
-icon_wifi = wibox.widget.imagebox()
-icon_wifi_down_up = wibox.widget.imagebox()
+local wifi_widget_down = wibox.widget.textbox()
+local wifi_widget_up = wibox.widget.textbox()
+local icon_wifi = wibox.widget.imagebox()
+local icon_wifi_down_up = wibox.widget.imagebox()
 icon_wifi:set_image (beautiful.widget_wifi)
 icon_wifi_down_up:set_image (beautiful.widget_wifi_down_up)
-wired_widget_down = wibox.widget.textbox()
-wired_widget_up = wibox.widget.textbox()
-icon_wired = wibox.widget.imagebox()
-icon_wired_down_up = wibox.widget.imagebox()
+local wired_widget_down = wibox.widget.textbox()
+local wired_widget_up = wibox.widget.textbox()
+local icon_wired = wibox.widget.imagebox()
+local icon_wired_down_up = wibox.widget.imagebox()
 icon_wired:set_image (beautiful.widget_wired)
 icon_wired_down_up:set_image (beautiful.widget_wired_down_up)
 
@@ -272,6 +228,7 @@ vicious.register(wifi_widget_up, vicious.widgets.net, '<span color="#b165bd">${w
 vicious.register(wired_widget_down, vicious.widgets.net, '<span color="#baa53f">${wan0 down_mb}</span>', 2)
 vicious.register(wired_widget_up, vicious.widgets.net, '<span color="#b165bd">${wan0 up_mb}</span>', 2)
 
+-- Place the widgets
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -303,40 +260,20 @@ for s = 1, screen.count() do
     if s == 1 then right_layout:add(wibox.widget.systray()) end
 
     right_layout:add(spacer)
-    right_layout:add(mymailicon)
+    right_layout:add(mailicon)
     right_layout:add(mymail_mail)
     myslash = wibox.widget.textbox("+")
     right_layout:add(myslash)
     right_layout:add(gmail_mail)
-
     right_layout:add(spacer)
     right_layout:add(cpuicon)
     right_layout:add(cpu)
-    --right_layout:add(spacer)
     right_layout:add(memicon)
     right_layout:add(mem)
     right_layout:add(diskicon)
     right_layout:add(disk)
-    --right_layout:add(spacer)
-    --right_layout:add(weatheric)
-    --right_layout:add(weather)
-    --right_layout:add(spacer)
-    --right_layout:add(mailicon)
-    --right_layout:add(mailwidget)
-    --right_layout:add(spacer)
     right_layout:add(baticon)
     right_layout:add(batpct)
-    --right_layout:add(netwidgeticon)
-    --right_layout:add(netwidget)
-    --right_layout:add(wifiicon)
-    --right_layout:add(wifi)
-    --right_layout:add(spacer2)
-    --right_layout:add(spacer)
-    --right_layout:add(pacicon)
-    --right_layout:add(pacwidget)
-    --right_layout:add(spacer)
-    --right_layout:add(spacer)
-    --right_layout:add(spacer)
     right_layout:add(icon_wifi)
     right_layout:add(wifi_widget_down)
     right_layout:add(icon_wifi_down_up)
@@ -348,11 +285,7 @@ for s = 1, screen.count() do
     right_layout:add(wired_widget_up)
     right_layout:add(spacer)
     right_layout:add(volicon)
-    --right_layout:add(volumecfg.widget)
     right_layout:add(volpct)
-    --right_layout:add(volspace)
-    --right_layout:add(spacer)
-    --right_layout:add(spacer)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -362,28 +295,8 @@ for s = 1, screen.count() do
     layout:set_middle(mytasklist[s])
     layout:set_right(right_layout)
 
-   mywibox[s]:set_widget(layout)
-   
-   -- Create the bottom wibox
-     --myinfowibox[s] = awful.wibox({ position = "bottom", screen = s })
-   -- Widgets that are aligned to the bottom
-    --local bottom_layout = wibox.layout.fixed.horizontal()
---    bottom_layout:add(diskwidget)
-    --bottom_layout:add(spacer)
-    --bottom_layout:add(netwidgeticon)
-    --bottom_layout:add(netwidget)
-    --bottom_layout:add(spacer)
-    --bottom_layout:add(wifiicon)
-    --bottom_layout:add(wifi)
-
- -- Now bring it all together 
-    --local layout = wibox.layout.align.horizontal()
-    --layout:set_bottom(bottom_layout)
-
-    --myinfowibox[s]:set_widget(bottom_layout)
-
+    mywibox[s]:set_widget(layout)
 end
--- }}}
 
 ----< Mouse bindings >------------------------------------------------
 --
@@ -497,7 +410,7 @@ clientkeys = awful.util.table.join(
 )
 
 -- Compute the maximum number of digit we need, limited to 9
-keynumber = 0
+local keynumber = 0
 for s = 1, screen.count() do
    keynumber = math.min(9, math.max(#tags[s], keynumber));
 end
@@ -561,16 +474,17 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    -- Apps specific rules
     { rule = { class = "URxvt" },
-      callback = function(c) awful.client.movetotag(tags[mouse.screen][1], c) end },
-    { rule = { class = "Firefox" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][2], c) end },
+    { rule = { class = "Firefox" },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][1], c) end },
     { rule = { class = "Thunderbird" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][5], c) end },
     { rule = { class = "Geary" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][5], c) end },
     { rule = { class = "Liferea" },
-      callback = function(c) awful.client.movetotag(tags[mouse.screen][2], c) end },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][1], c) end },
     { rule = { class = "VirtualBox" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][3], c) end },
     { rule = { class = "Remmina" },
@@ -621,8 +535,6 @@ awful.rules.rules = {
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
     { rule = { class = "lincity-ng" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
-    -- XTerm на пятом и шестом теге первого экрана
-    -- { rule = { class = "XTerm" }, callback = function(c) c:tags({tags[1][4], tags[1][6]}) end},
 }
 
 ----< Signals >------------------------------------------------------
@@ -651,6 +563,5 @@ client.add_signal("manage", function (c, startup)
         end
     end
 end)
-
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
