@@ -1,8 +1,12 @@
 #!/usr/bin/python
 
-# Create credentials.py with mymail_login, mymail_password, mymail_server, mymail_port variables
+# Create ~/.local/share/keyrings/mail_loop_keys.py:
+# mymail_server = 'imap.example.com'
+# mymail_port = 143
+# mymail_login = 'username'
+# mymail_password = 'password'
 
-import imaplib,ssl
+import imaplib,ssl,sys,os
 
 # http://stackoverflow.com/questions/9713055/certificate-authority-for-imaplib-and-poplib-python
 import imaplib,ssl
@@ -17,8 +21,8 @@ imaplib.IMAP4.__dict__['starttls']=IMAP_starttls
 imaplib.Commands['STARTTLS']=('NONAUTH',)
 
 try:
-    # read credentials
-    from credentials import mymail_server,mymail_port,mymail_login,mymail_password
+    sys.path.insert (0, os.getenv("HOME")+"/.local/share/keyrings")
+    from mail_loop_keys import mymail_server,mymail_port,mymail_login,mymail_password
 
     M=imaplib.IMAP4(mymail_server, mymail_port)
     M.starttls()

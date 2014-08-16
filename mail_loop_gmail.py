@@ -1,11 +1,14 @@
 #!/usr/bin/python
 
-# Create credentials.py with gmail_login and gmail_password variables
+# Create ~/.local/share/keyrings/mail_loop_keys.py:
+# gmail_login = 'username'
+# gmail_password = 'password'
 
-import imaplib
+import imaplib,sys,os
 
 try:
-    from credentials import gmail_login,gmail_password
+    sys.path.insert (0, os.getenv("HOME")+"/.local/share/keyrings")
+    from mail_loop_keys import gmail_login,gmail_password
     M=imaplib.IMAP4_SSL("imap.gmail.com", 993)
     M.login(gmail_login,gmail_password)
     status, counts = M.status("Inbox","(MESSAGES UNSEEN)")
