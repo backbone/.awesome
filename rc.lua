@@ -197,16 +197,22 @@ end
 local mail_tmp_path = "/tmp/"..username.."-mail_loop"
 local mailicon = wibox.widget.imagebox()
 mailicon:set_image(beautiful.widget_mailnew)
+function mail_on_click()
+  os.execute ("pgrep thunderbird || thunderbird &")
+end
+mailicon:buttons(awful.util.table.join(awful.button({ }, 1, mail_on_click)))
 local mymail_mail = wibox.widget.textbox( "?" )
 mymail_mail.timer = timer{timeout=20}
 mymail_mail.timer:connect_signal("timeout",
     function () mymail_mail:set_text ( mail_count(mail_tmp_path.."/mymail_count") ) end)
 mymail_mail.timer:start()
+mymail_mail:buttons(mailicon:buttons())
 local gmail_mail = wibox.widget.textbox( "?" )
 gmail_mail.timer = timer{timeout=20}
 gmail_mail.timer:connect_signal("timeout",
     function () gmail_mail:set_text ( mail_count(mail_tmp_path.."/gmail_count") ) end)
 gmail_mail.timer:start()
+gmail_mail:buttons(mailicon:buttons())
 
 -- Wi-Fi / Ethernet widgets
 local wifi_widget_down = wibox.widget.textbox()
@@ -263,6 +269,7 @@ for s = 1, screen.count() do
     right_layout:add(mailicon)
     right_layout:add(mymail_mail)
     myslash = wibox.widget.textbox("+")
+    myslash:buttons(mailicon:buttons())
     right_layout:add(myslash)
     right_layout:add(gmail_mail)
     right_layout:add(spacer)
