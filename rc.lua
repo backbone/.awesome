@@ -61,13 +61,13 @@ layouts =
 {
     awful.layout.suit.max,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
+--    awful.layout.suit.fair.horizontal,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.floating,
-    awful.layout.suit.max.fullscreen,
+--    awful.layout.suit.tile.bottom,
+--    awful.layout.suit.tile.top,
+--    awful.layout.suit.floating,
+--    awful.layout.suit.max.fullscreen,
 --    awful.layout.suit.spiral,
 --    awful.layout.suit.spiral.dwindle,
 --    awful.layout.suit.magnifier
@@ -95,8 +95,8 @@ naughty.config.defaults.hover_timeout = nil
 tags = {
    names  = { "1www",     "2rxvt",   "3virt",   "4office",   "5mail",
               "6game",    "7gimp",   "8dic",    "9im" },
-   layout = { layouts[1],  layouts[3], layouts[1], layouts[1], layouts[1],
-              layouts[1],  layouts[1], layouts[1], layouts[2]}
+   layout = { layouts[3],  layouts[2], layouts[1], layouts[3], layouts[1],
+              layouts[1],  layouts[1], layouts[2], layouts[4]}
 }
  for s = 1, screen.count() do
      -- Each screen has its own tag table.
