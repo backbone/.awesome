@@ -188,10 +188,10 @@ function mail_count(filename)
           if l == nil then
               l = "?"
           end
+          f:close()
     else
           l = "?"
     end
-    f:close()
     return l
 end
 local mail_tmp_path = "/tmp/"..username.."-mail_loop"
