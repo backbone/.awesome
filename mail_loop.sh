@@ -1,7 +1,7 @@
 #!/bin/bash
 # mymail_gmail_loop.sh
 
-MAILDIR=/tmp/$USERNAME-mail_loop
+MAILDIR=/tmp/$USER-mail_loop
 mkdir --mode=700 $MAILDIR 2>/dev/null
 
 while [ 1 ]; do

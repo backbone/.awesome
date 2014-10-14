@@ -11,7 +11,7 @@ require("autostart")
 --
 local home = os.getenv("HOME")
 local cfgpath = home.."/.config/awesome"
-local username = os.getenv("USERNAME")
+local username = os.getenv("USER")
 local terminal = "urxvt -tr +sb"
 local editor = os.getenv("EDITOR") or "vim"
 local editor_cmd = terminal .. " -e " .. editor
