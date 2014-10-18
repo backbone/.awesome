@@ -60,7 +60,7 @@ checkFullscreen()
     for display in $displays
     do
         #get id of active window and clean output
-        activ_win_id=`DISPLAY=:0.${display} xprop -root _NET_ACTIVE_WINDOW`
+        activ_win_id=`DISPLAY=$DISPLAY.${display} xprop -root _NET_ACTIVE_WINDOW`
         #activ_win_id=${activ_win_id#*# } #gives error if xprop returns extra ", 0x0" (happens on some distros)
         activ_win_id=${activ_win_id:40:9}
 
@@ -72,7 +72,7 @@ checkFullscreen()
         #fi
         
         # Check if Active Window (the foremost window) is in fullscreen state
-        isActivWinFullscreen=`DISPLAY=:0.${display} xprop -id $activ_win_id | grep _NET_WM_STATE_FULLSCREEN`
+        isActivWinFullscreen=`DISPLAY=$DISPLAY.${display} xprop -id $activ_win_id | grep _NET_WM_STATE_FULLSCREEN`
             if [[ "$isActivWinFullscreen" = *NET_WM_STATE_FULLSCREEN* ]];then
                 isAppRunning
                 var=$?
