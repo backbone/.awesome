@@ -111,6 +111,7 @@ myawesomemenu = {
    { "hibernate", "gksudo hibernate" },
    { "lock", "xscreensaver-command --lock" },
    { "reboot", "sudo reboot" },
+   { "halt", "sudo halt" },
    { "manual", terminal .. " -e man awesome", freedesktop.utils.lookup_icon({ icon = 'help' }) },
    { "edit config", editor_cmd .. " " .. awesome.conffile, freedesktop.utils.lookup_icon({ icon = 'package_settings' }) },
    { "restart", awesome.restart, freedesktop.utils.lookup_icon({ icon = 'system-shutdown' }) },
