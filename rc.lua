@@ -108,7 +108,7 @@ tags = {
 menu_items = freedesktop.menu.new()
 myawesomemenu = {
    { "next wall", cfgpath.."/set_wall.sh "..home.."/wallpapers/" },
-   { "hibernate", "gksudo hibernate" },
+   { "hibernate", "sudo hibernate" },
    { "lock", "xscreensaver-command --lock" },
    { "reboot", "sudo reboot" },
    { "halt", "sudo halt" },
