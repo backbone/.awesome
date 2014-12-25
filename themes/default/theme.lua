@@ -110,8 +110,7 @@ theme.awesome_icon = home_path .. '.config/awesome/themes/default/icon/awesome16
 theme.arch_icon = home_path .. '.config/awesome/themes/default/icon/Arch.png'
 
 -- {{{ Widgets
--- theme.widget_disk = awful.util.getdir("config") .. "/themes/default/widgets/disk.png"
-theme.widget_disk = "/home/kolan/.config/awesome/Icons/16x16/hdd_clear.png"
+theme.widget_disk = awful.util.getdir("config") .. "/Icons/16x16/hdd_clear.png"
 theme.widget_cpu = awful.util.getdir("config") .. "/themes/default/widgets/cpu.png"
 theme.widget_ac = awful.util.getdir("config") .. "/themes/default/widgets/ac.png"
 theme.widget_acblink = awful.util.getdir("config") .. "/themes/default/widgets/acblink.png"
@@ -131,8 +130,8 @@ theme.widget_tempwarn = awful.util.getdir("config") .. "/themes/default/widgets/
 theme.widget_temphot = awful.util.getdir("config") .. "/themes/default/widgets/temphot.png"
 theme.widget_wifi = awful.util.getdir("config") .. "/themes/default/widgets/wifi.png"
 theme.widget_nowifi = awful.util.getdir("config") .. "/themes/default/widgets/nowifi.png"
-theme.widget_wired = "/home/kolan/.config/awesome/Icons/16x16/net-wired.png"
-theme.widget_wired_down_up = "/home/kolan/.config/awesome/Icons/16x16/down_up.png"
+theme.widget_wired = awful.util.getdir("config") .. "/Icons/16x16/net-wired.png"
+theme.widget_wired_down_up = awful.util.getdir("config") .. "/Icons/16x16/down_up.png"
 theme.widget_wifi_down_up = "~/.config/awesome/Icons/16x16/down_up.png"
 theme.widget_mpd = awful.util.getdir("config") .. "/themes/default/widgets/mpd.png"
 theme.widget_play = awful.util.getdir("config") .. "/themes/default/widgets/play.png"
