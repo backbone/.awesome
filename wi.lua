@@ -70,7 +70,19 @@ baticon:buttons(batpct:buttons())
 vicious.cache(vicious.widgets.volume)
 volicon = wibox.widget.imagebox()
 volicon:set_image(beautiful.widget_vol)
+volicon:buttons(
+    awful.util.table.join(
+        awful.button({ }, 4, function () awful.util.spawn("amixer set Master 1%+") end),
+        awful.button({ }, 5, function () awful.util.spawn("amixer set Master 1%-") end)
+    )
+)
 volpct = wibox.widget.textbox()
+volpct:buttons(
+    awful.util.table.join(
+        awful.button({ }, 4, function () awful.util.spawn("amixer set Master 1%+") end),
+        awful.button({ }, 5, function () awful.util.spawn("amixer set Master 1%-") end)
+    )
+)
 vicious.register(volpct, vicious.widgets.volume, "$1% ", nil, "Master")
 
 ----< CPU >-----------------------------------------------------------
