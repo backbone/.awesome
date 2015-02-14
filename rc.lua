@@ -488,6 +488,8 @@ awful.rules.rules = {
       callback = function(c) awful.client.movetotag(tags[mouse.screen][2], c) end },
     { rule = { class = "Firefox" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][1], c) end },
+    { rule = { class = "Opera" },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][1], c) end },
     { rule = { class = "Thunderbird" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][5], c) end },
     { rule = { class = "Geary" },
