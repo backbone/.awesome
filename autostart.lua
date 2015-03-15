@@ -10,3 +10,4 @@ os.execute (os.getenv("HOME").."/.config/awesome/set_wall.sh "..os.getenv("HOME"
 os.execute ("pgrep mail_loop.sh || "..os.getenv("HOME").."/.config/awesome/mail_loop.sh &")
 os.execute ("pgrep lightsOn.sh || "..os.getenv("HOME").."/.config/awesome/lightsOn.sh &")
 os.execute ("pgrep wicd-client || wicd-gtk --tray &")
+os.execute ("xkbcomp $DISPLAY - | egrep -v 'group . = AltGr;' | xkbcomp - $DISPLAY")
