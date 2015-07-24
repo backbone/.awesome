@@ -76,7 +76,7 @@ layouts =
 ----< Naughty presets >-----------------------------------------------
 --
 naughty.config.defaults.timeout = 5
-naughty.config.defaults.screen = 2
+naughty.config.defaults.screen = 1
 naughty.config.defaults.position = "top_right"
 naughty.config.defaults.margin = 8
 naughty.config.defaults.gap = 1
