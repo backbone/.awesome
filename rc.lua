@@ -552,7 +552,7 @@ awful.rules.rules = {
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
     { rule = { class = "lincity-ng" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
-    { rule = { class = "mpv" },
+    { rule = { class = "Kodi" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
     { rule = { class = "Vlc" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
