@@ -649,7 +649,7 @@ awful.rules.rules = {
     { rule = { class = "psi" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][9], c) end },
     { rule = { class = "Transmission" },
-      callback = function(c) awful.client.movetotag(tags[mouse.screen][9], c) end },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][1], c) end },
     { rule = { class = "Vncviewer" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][3], c) end },
     { rule = { class = "Avidemux" },
