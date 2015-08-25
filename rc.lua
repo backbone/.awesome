@@ -684,6 +684,8 @@ awful.rules.rules = {
       callback = function(c) awful.client.movetotag(tags[mouse.screen][1], c) end },
     { rule = { name = "Frozen-.*Bubble" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
+    { rule = { name = "d-feet" },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][5], c) end },
 }
 
 ----< Signals >------------------------------------------------------
