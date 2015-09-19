@@ -687,6 +687,8 @@ awful.rules.rules = {
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
     { rule = { name = "d-feet" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][5], c) end },
+    { rule = { name = "Cinelerra" },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
 }
 
 ----< Signals >------------------------------------------------------
