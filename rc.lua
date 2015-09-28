@@ -697,6 +697,8 @@ awful.rules.rules = {
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
     { rule = { name = "Kdenlive" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][6], c) end },
+    { rule = { name = "dconf-editor" },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][5], c) end },
 }
 
 ----< Signals >------------------------------------------------------
