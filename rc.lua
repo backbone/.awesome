@@ -393,10 +393,14 @@ globalkeys = awful.util.table.join(
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
               end),
-    awful.key({ modkey }, "l",function () awful.util.spawn( "mpc play" ) end),
-    awful.key({ modkey }, ";",function () awful.util.spawn( "mpc pause" ) end),
-    awful.key({ modkey }, "'",function () awful.util.spawn( "mpc prev" ) end),
-    awful.key({ modkey }, "\\",function () awful.util.spawn( "mpc next" ) end)
+    awful.key({ modkey }, "l",function () awful.util.spawn( "mpc play" );
+                                          awful.util.spawn( "audacious -p" )  end),
+    awful.key({ modkey }, ";",function () awful.util.spawn( "mpc pause" );
+                                          awful.util.spawn( "audacious -u" )  end),
+    awful.key({ modkey }, "'",function () awful.util.spawn( "mpc prev" );
+                                          awful.util.spawn( "audacious -r" )  end),
+    awful.key({ modkey }, "\\",function () awful.util.spawn( "mpc next" );
+                                          awful.util.spawn( "audacious -f" )  end)
 )
 
 clientkeys = awful.util.table.join(
