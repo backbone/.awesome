@@ -581,6 +581,8 @@ awful.rules.rules = {
       callback = function(c) awful.client.movetotag(tags[mouse.screen][5], c) end },
     { rule = { class = "Pcmanfm" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][4], c) end },
+    { rule = { class = "Fm" },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][4], c) end },
     { rule = { class = "File-roller" },
       callback = function(c) awful.client.movetotag(tags[mouse.screen][4], c) end },
     { rule = { class = "Clamtk" },
