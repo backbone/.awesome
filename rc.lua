@@ -216,6 +216,28 @@ gmail_mail.timer:connect_signal("timeout",
 gmail_mail.timer:start()
 gmail_mail:buttons(mailicon:buttons())
 
+-- nVidia Optimus
+local optimus_icon = wibox.widget.imagebox()
+optimus_icon:set_image(beautiful.widget_optimus_off)
+optimus_icon.timer = timer{timeout=3}
+optimus_icon.timer:connect_signal("timeout",
+    function ()
+        local f = io.open("/proc/acpi/bbswitch", "r")
+        local l = nil
+        if f ~= nil then
+            l = f:read()
+            if string.sub (l, 14) == "ON" then
+                optimus_icon:set_image(beautiful.widget_optimus_on)
+            else
+                optimus_icon:set_image(beautiful.widget_optimus_off)
+            end
+            f:close()
+        else
+            optimus_icon:set_image(beautiful.widget_optimus_off)
+        end
+    end)
+optimus_icon.timer:start()
+
 -- Wi-Fi / Ethernet widgets
 local wifi_widget_down = wibox.widget.textbox()
 local wifi_widget_up = wibox.widget.textbox()
@@ -281,6 +303,8 @@ for s = 1, screen.count() do
     right_layout:add(mem)
     right_layout:add(diskicon)
     right_layout:add(disk)
+    right_layout:add(optimus_icon)
+    right_layout:add(spacer)
     right_layout:add(baticon)
     right_layout:add(batpct)
     right_layout:add(icon_wifi)
