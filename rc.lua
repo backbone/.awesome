@@ -183,7 +183,7 @@ mytasklist.buttons = awful.util.table.join(
 
 -- My Mail updater widget
 function mail_count(filename)
-    local f = io.open(filename)
+    local f = io.open(filename, "r")
     local l = nil
     if f ~= nil then
           l = f:read()
