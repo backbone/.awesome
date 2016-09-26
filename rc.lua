@@ -269,6 +269,13 @@ end
 cpuicon:buttons(awful.util.table.join(awful.button({ }, 1, show_htop)))
 cpu:buttons(awful.util.table.join(awful.button({ }, 1, show_htop)))
 
+-- Memory icon
+function show_atop ()
+    os.execute ("pgrep atop || urxvt -e atop &")
+end
+memicon:buttons(awful.util.table.join(awful.button({ }, 1, show_atop)))
+mem:buttons(awful.util.table.join(awful.button({ }, 1, show_atop)))
+
 vicious.cache(vicious.widgets.net)
 vicious.register(wifi_widget_down, vicious.widgets.net, '<span color="#baa53f">${wifi0 down_mb}</span>', 2)
 vicious.register(wifi_widget_up, vicious.widgets.net, '<span color="#b165bd">${wifi0 up_mb}</span>', 2)
