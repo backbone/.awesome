@@ -262,6 +262,13 @@ local icon_wired_down_up = wibox.widget.imagebox()
 icon_wired:set_image (beautiful.widget_wired)
 icon_wired_down_up:set_image (beautiful.widget_wired_down_up)
 
+-- CPU icon
+function show_htop ()
+    os.execute ("pgrep htop || urxvt -e htop &")
+end
+cpuicon:buttons(awful.util.table.join(awful.button({ }, 1, show_htop)))
+cpu:buttons(awful.util.table.join(awful.button({ }, 1, show_htop)))
+
 vicious.cache(vicious.widgets.net)
 vicious.register(wifi_widget_down, vicious.widgets.net, '<span color="#baa53f">${wifi0 down_mb}</span>', 2)
 vicious.register(wifi_widget_up, vicious.widgets.net, '<span color="#b165bd">${wifi0 up_mb}</span>', 2)
