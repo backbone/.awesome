@@ -131,6 +131,11 @@ spacer:set_text(' ')
 
 -- Create a textclock widget
 local mytextclock = awful.widget.textclock()
+mytextclock:buttons(awful.util.table.join(awful.button({ }, 1,
+    function ()
+        os.execute ("xdg-open https://calendar.google.com/calendar/render?tab=wc#main_7%7Cmonth &")
+    end
+)))
 
 -- Create a wibox for each screen and add it
 local mywibox = {}
