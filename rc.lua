@@ -276,6 +276,13 @@ end
 memicon:buttons(awful.util.table.join(awful.button({ }, 1, show_atop)))
 mem:buttons(awful.util.table.join(awful.button({ }, 1, show_atop)))
 
+-- Disk icon
+function show_iotop ()
+    os.execute ("pgrep iotop || urxvt -e sudo iotop --delay=4 &")
+end
+diskicon:buttons(awful.util.table.join(awful.button({ }, 1, show_iotop)))
+disk:buttons(awful.util.table.join(awful.button({ }, 1, show_iotop)))
+
 vicious.cache(vicious.widgets.net)
 vicious.register(wifi_widget_down, vicious.widgets.net, '<span color="#baa53f">${wifi0 down_mb}</span>', 2)
 vicious.register(wifi_widget_up, vicious.widgets.net, '<span color="#b165bd">${wifi0 up_mb}</span>', 2)
