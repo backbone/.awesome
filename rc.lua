@@ -237,6 +237,11 @@ optimus_icon.timer:connect_signal("timeout",
         end
     end)
 optimus_icon.timer:start()
+optimus_icon:buttons(awful.util.table.join(awful.button({ }, 1,
+    function ()
+        os.execute ("pgrep nvidia-settings || optirun nvidia-settings -c :8 &")
+    end
+)))
 
 -- Wi-Fi / Ethernet widgets
 local wifi_widget_down = wibox.widget.textbox()
