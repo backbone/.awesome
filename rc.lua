@@ -262,6 +262,19 @@ local icon_wired_down_up = wibox.widget.imagebox()
 icon_wired:set_image (beautiful.widget_wired)
 icon_wired_down_up:set_image (beautiful.widget_wired_down_up)
 
+-- Network buttons
+function show_nload (interface)
+    os.execute ("pgrep --full --exact 'nload "..interface.."' || urxvt -e nload "..interface.." &")
+end
+icon_wifi:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end)))
+wifi_widget_down:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end)))
+icon_wifi_down_up:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end)))
+wifi_widget_up:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end)))
+icon_wired:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end)))
+wired_widget_down:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end)))
+icon_wired_down_up:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end)))
+wired_widget_up:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end)))
+
 -- CPU icon
 function show_htop ()
     os.execute ("pgrep htop || urxvt -e htop &")
