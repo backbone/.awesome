@@ -391,17 +391,17 @@ root.buttons(awful.util.table.join(
 globalkeys = awful.util.table.join(
     -- Volume control --
     awful.key({ modkey }, ".", function ()
-    os.execute("pgrep -x amixer || amixer set Master 1%+") end),
+    os.execute("pgrep -x amixer || amixer set Master 5%+") end),
     awful.key({ modkey }, ",", function ()
-    os.execute("pgrep -x amixer || amixer set Master 1%-") end),
+    os.execute("pgrep -x amixer || amixer set Master 5%-") end),
     awful.key({ modkey }, "/", function ()
     awful.util.spawn("amixer sset Master toggle") end),
 
     -- Volume control --
     awful.key({ }, "XF86AudioRaiseVolume", function ()
-    os.execute("pgrep -x amixer || amixer set Master 1%+") end),
+    os.execute("pgrep -x amixer || amixer set Master 5%+") end),
     awful.key({ }, "XF86AudioLowerVolume", function ()
-    os.execute("pgrep -x amixer || amixer set Master 1%-") end),
+    os.execute("pgrep -x amixer || amixer set Master 5%-") end),
     awful.key({ }, "XF86AudioMute", function ()
     awful.util.spawn("amixer sset Master toggle") end),
 
