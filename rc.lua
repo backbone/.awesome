@@ -95,7 +95,7 @@ naughty.config.defaults.hover_timeout = nil
 tags = {
    names  = { "1web",     "2term",   "3virt",   "4office",   "5dev",
               "6play",    "7grafx",  "8dic",    "9im" },
-   layout = { layouts[1],  layouts[2], layouts[1], layouts[3], layouts[2],
+   layout = { layouts[1],  layouts[2], layouts[1], layouts[1], layouts[2],
               layouts[1],  layouts[1], layouts[2], layouts[4]}
 }
  for s = 1, screen.count() do
