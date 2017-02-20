@@ -81,13 +81,7 @@ volicon:buttons(
     )
 )
 volpct = wibox.widget.textbox()
-volpct:buttons(
-    awful.util.table.join(
-        awful.button({ }, 1, function () awful.util.spawn("urxvt -e alsamixer --view=all") end),
-        awful.button({ }, 4, function () os.execute("pgrep -x amixer || amixer set Master 1%+") end),
-        awful.button({ }, 5, function () os.execute("pgrep -x amixer || amixer set Master 1%-") end)
-    )
-)
+volpct:buttons(volicon:buttons())
 vicious.register(volpct, vicious.widgets.volume, "$1% ", nil, "Master")
 
 ----< CPU >-----------------------------------------------------------

@@ -270,34 +270,34 @@ function show_nethogs ()
     os.execute ("pgrep nethogs || urxvt -e sudo nethogs &")
 end
 icon_wifi:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 3, show_nethogs)))
-wifi_widget_down:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 3, show_nethogs)))
-icon_wifi_down_up:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 3, show_nethogs)))
-wifi_widget_up:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 3, show_nethogs)))
+wifi_widget_down:buttons(icon_wifi:buttons())
+icon_wifi_down_up:buttons(icon_wifi:buttons())
+wifi_widget_up:buttons(icon_wifi:buttons())
 icon_wired:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 3, show_nethogs)))
-wired_widget_down:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 3, show_nethogs)))
-icon_wired_down_up:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 3, show_nethogs)))
-wired_widget_up:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 3, show_nethogs)))
+wired_widget_down:buttons(icon_wired:buttons())
+icon_wired_down_up:buttons(icon_wired:buttons())
+wired_widget_up:buttons(icon_wired:buttons())
 
 -- CPU icon
 function show_htop ()
     os.execute ("pgrep htop || urxvt -e htop &")
 end
 cpuicon:buttons(awful.util.table.join(awful.button({ }, 1, show_htop)))
-cpu:buttons(awful.util.table.join(awful.button({ }, 1, show_htop)))
+cpu:buttons(cpuicon:buttons())
 
 -- Memory icon
 function show_atop ()
     os.execute ("pgrep atop || urxvt -e atop &")
 end
 memicon:buttons(awful.util.table.join(awful.button({ }, 1, show_atop)))
-mem:buttons(awful.util.table.join(awful.button({ }, 1, show_atop)))
+mem:buttons(memicon:buttons())
 
 -- Disk icon
 function show_iotop ()
     os.execute ("pgrep iotop || urxvt -e sudo iotop --delay=4 &")
 end
 diskicon:buttons(awful.util.table.join(awful.button({ }, 1, show_iotop)))
-disk:buttons(awful.util.table.join(awful.button({ }, 1, show_iotop)))
+disk:buttons(diskicon:buttons())
 
 vicious.cache(vicious.widgets.net)
 vicious.register(wifi_widget_down, vicious.widgets.net, '<span color="#baa53f">${wifi0 down_mb}</span>', 2)
