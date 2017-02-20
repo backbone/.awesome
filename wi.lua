@@ -62,7 +62,10 @@ function popup_bat()
   naughty.notify { text = "Charge : " .. bat_charge .. "%\nState  : " .. state ..
     " (" .. bat_time .. ")", timeout = 5, hover_timeout = 0.5 }
 end
-batpct:buttons(awful.util.table.join(awful.button({ }, 1, popup_bat)))
+function show_powertop ()
+    os.execute ("pgrep powertop || urxvt -e sudo powertop &")
+end
+batpct:buttons(awful.util.table.join(awful.button({ }, 1, popup_bat), awful.button({ }, 3, show_powertop)))
 baticon:buttons(batpct:buttons())
 
 ----< Volume >--------------------------------------------------------
