@@ -127,6 +127,7 @@ theme.widget_mail = awful.util.getdir("config") .. "/themes/default/widgets/mail
 theme.widget_mailnew = awful.util.getdir("config") .. "/themes/default/widgets/mailnew.png"
 theme.widget_optimus_off = awful.util.getdir("config") .. "/themes/default/widgets/optimus_off.png"
 theme.widget_optimus_on = awful.util.getdir("config") .. "/themes/default/widgets/optimus_on.png"
+theme.widget_optimus_overclocked = awful.util.getdir("config") .. "/themes/default/widgets/optimus_overclocked.png"
 theme.widget_temp = awful.util.getdir("config") .. "/themes/default/widgets/temp.png"
 theme.widget_tempwarn = awful.util.getdir("config") .. "/themes/default/widgets/tempwarm.png"
 theme.widget_temphot = awful.util.getdir("config") .. "/themes/default/widgets/temphot.png"

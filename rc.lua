@@ -223,6 +223,7 @@ gmail_mail:buttons(mailicon:buttons())
 
 -- nVidia Optimus
 local optimus_icon = wibox.widget.imagebox()
+local optimus_overclocked = false
 optimus_icon:set_image(beautiful.widget_optimus_off)
 optimus_icon.timer = timer{timeout=3}
 optimus_icon.timer:connect_signal("timeout",
@@ -232,9 +233,14 @@ optimus_icon.timer:connect_signal("timeout",
         if f ~= nil then
             l = f:read()
             if string.sub (l, 14) == "ON" then
-                optimus_icon:set_image(beautiful.widget_optimus_on)
+                if optimus_overclocked == true then
+                    optimus_icon:set_image(beautiful.widget_optimus_overclocked)
+                else
+                    optimus_icon:set_image(beautiful.widget_optimus_on)
+                end
             else
                 optimus_icon:set_image(beautiful.widget_optimus_off)
+                optimus_overclocked = false
             end
             f:close()
         else
@@ -242,11 +248,20 @@ optimus_icon.timer:connect_signal("timeout",
         end
     end)
 optimus_icon.timer:start()
-optimus_icon:buttons(awful.util.table.join(awful.button({ }, 1,
-    function ()
-        os.execute ("pgrep nvidia-settings || optirun nvidia-settings -c :8 &")
-    end
-)))
+optimus_icon:buttons(awful.util.table.join(
+    awful.button({ }, 1,
+        function ()
+            os.execute ("pgrep nvidia-settings || optirun nvidia-settings -c :8 &")
+        end
+    ),
+    awful.button({ }, 3,
+        function ()
+            os.execute ("optirun nvidia-settings -c :8 -a '[gpu:0]/GPUGraphicsClockOffset[2]=135' &")
+            os.execute ("optirun nvidia-settings -c :8 -a '[gpu:0]/GPUMemoryTransferRateOffset[2]=605' &")
+            optimus_overclocked = true
+        end
+    )
+))
 
 -- Wi-Fi / Ethernet widgets
 local wifi_widget_down = wibox.widget.textbox()
