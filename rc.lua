@@ -248,9 +248,9 @@ root.buttons(gears.table.join(
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
+    awful.key({ modkey,           }, "[",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+    awful.key({ modkey,           }, "]",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
@@ -295,8 +295,8 @@ globalkeys = gears.table.join(
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
-              {description = "quit awesome", group = "awesome"}),
+    -- awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+    --           {description = "quit awesome", group = "awesome"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -314,6 +314,9 @@ globalkeys = gears.table.join(
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
+
+    -- awful.key({ modkey, "Shift"   }, "u",     function () awful.client.incwfact( 0.05)    end),
+    -- awful.key({ modkey, "Shift"   }, "p",     function () awful.client.incwfact(-0.05)    end),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
@@ -342,7 +345,26 @@ globalkeys = gears.table.join(
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "show the menubar", group = "launcher"}),
+
+    -- Volume control --
+    awful.key({ modkey }, ".", function () os.execute("pgrep -x amixer || amixer set Master 5%+") end),
+    awful.key({ modkey }, ",", function () os.execute("pgrep -x amixer || amixer set Master 5%-") end),
+    awful.key({ modkey }, "/", function () awful.util.spawn("amixer sset Master toggle") end),
+    awful.key({ }, "XF86AudioRaiseVolume", function () os.execute("pgrep -x amixer || amixer set Master 5%+") end),
+    awful.key({ }, "XF86AudioLowerVolume", function () os.execute("pgrep -x amixer || amixer set Master 5%-") end),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer sset Master toggle") end),
+
+    -- Player control --
+    awful.key({ modkey }, "p",function () awful.util.spawn( "mpc play" ); awful.util.spawn( "audacious -p" )  end),
+    awful.key({ modkey }, ";",function () awful.util.spawn( "mpc pause" ); awful.util.spawn( "audacious -u" )  end),
+    awful.key({ modkey }, "'",function () awful.util.spawn( "mpc prev" ); awful.util.spawn( "audacious -r" )  end),
+    awful.key({ modkey }, "\\",function () awful.util.spawn( "mpc next" ); awful.util.spawn( "audacious -f" )  end),
+
+    awful.key({        }, "Print", function () awful.util.spawn_with_shell ("DATE=`date +%Y%m%d_%H%M%S`;"..
+                                   "xsnap -nogui -file $HOME/screenshots/$DATE && gqview -r $HOME/screenshots/$DATE.png") end),
+	-- Lock Screen --
+    awful.key({ "Mod4"   }, "l", function () os.execute ("xscreensaver-command --lock") end)
 )
 
 clientkeys = gears.table.join(
