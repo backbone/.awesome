@@ -176,25 +176,28 @@ function mail_on_click()
 end
 mailicon:buttons(awful.util.table.join(awful.button({ }, 1, mail_on_click)))
 local mymail_mail = wibox.widget.textbox( "?" )
-mymail_mail.timer = timer{timeout=20}
-mymail_mail.timer:connect_signal("timeout",
-    function () mymail_mail:set_text ( mail_count(mail_tmp_path.."/mymail_count") ) end)
-mymail_mail.timer:start()
+gears.timer {
+	timeout = 20,
+	autostart = true,
+	callback = function() mymail_mail:set_text ( mail_count(mail_tmp_path.."/mymail_count") ) end
+}
 mymail_mail:buttons(mailicon:buttons())
 -- local gmail_mail = wibox.widget.textbox( "?" )
--- gmail_mail.timer = timer{timeout=20}
--- gmail_mail.timer:connect_signal("timeout",
---     function () gmail_mail:set_text ( mail_count(mail_tmp_path.."/gmail_count") ) end)
--- gmail_mail.timer:start()
+-- gears.timer {
+-- 	timeout = 20,
+-- 	autostart = true,
+-- 	callback = function() gmail_mail:set_text ( mail_count(mail_tmp_path.."/gmail_count") ) end
+-- }
 -- gmail_mail:buttons(mailicon:buttons())
 
 -- nVidia Optimus
 local optimus_icon = wibox.widget.imagebox()
 local optimus_overclocked = false
 optimus_icon:set_image(beautiful.widget_optimus_off)
-optimus_icon.timer = timer{timeout=3}
-optimus_icon.timer:connect_signal("timeout",
-    function ()
+gears.timer {
+	timeout = 3,
+	autostart = true,
+	callback = function()
         local f = io.open("/proc/acpi/bbswitch", "r")
         local l = nil
         if f ~= nil then
@@ -213,8 +216,8 @@ optimus_icon.timer:connect_signal("timeout",
         else
             optimus_icon:set_image(beautiful.widget_optimus_off)
         end
-    end)
-optimus_icon.timer:start()
+    end
+}
 optimus_icon:buttons(awful.util.table.join(
     awful.button({ }, 1,
         function ()
