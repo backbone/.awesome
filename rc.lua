@@ -15,6 +15,11 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 require("awful.hotkeys_popup.keys.vim")
 --FreeDesktop
 require('freedesktop.menu')
+--require('freedesktop.utils')
+freedesktop.utils.icon_theme = 'gnome'
+local vicious = require("vicious")
+local wi = require("wi")
+local autostart = require("autostart")
 
 ----< Variables >-----------------------------------------------------
 --
@@ -30,6 +35,23 @@ local titlebars_enabled = false
 ----< Theme >---------------------------------------------------------
 --
 beautiful.init(cfgpath.."/themes/zenburn/theme.lua")
+
+-- Naughty
+--
+naughty.config.defaults.timeout = 5
+naughty.config.defaults.screen = 1
+naughty.config.defaults.position = "top_right"
+naughty.config.defaults.margin = 8
+naughty.config.defaults.gap = 1
+naughty.config.defaults.ontop = true
+naughty.config.defaults.font = "terminus 9"
+naughty.config.defaults.icon = nil
+naughty.config.defaults.icon_size = 256
+naughty.config.defaults.fg = beautiful.fg_tooltip
+naughty.config.defaults.bg = beautiful.bg_tooltip
+naughty.config.defaults.border_color = beautiful.border_tooltip
+naughty.config.defaults.border_width = 2
+naughty.config.defaults.hover_timeout = nil
 
 ----< Error handling >------------------------------------------------
 if awesome.startup_errors then
@@ -123,6 +145,180 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
+----< Widgets >-------------------------------------------------------
+--
+local spacer = wibox.widget.textbox()
+spacer:set_text(' ')
+
+-- Create a wibox for each screen and add it
+local myinfowibox = {}
+
+-- My Mail updater widget
+function mail_count(filename)
+    local f = io.open(filename, "r")
+    local l = nil
+    if f ~= nil then
+          l = f:read()
+          if l == nil then
+              l = "?"
+          end
+          f:close()
+    else
+          l = "?"
+    end
+    return l
+end
+local mail_tmp_path = "/tmp/"..username.."-mail_loop"
+local mailicon = wibox.widget.imagebox()
+mailicon:set_image(beautiful.widget_mailnew)
+function mail_on_click()
+  os.execute ("pgrep thunderbird || thunderbird &")
+end
+mailicon:buttons(awful.util.table.join(awful.button({ }, 1, mail_on_click)))
+local mymail_mail = wibox.widget.textbox( "?" )
+mymail_mail.timer = timer{timeout=20}
+mymail_mail.timer:connect_signal("timeout",
+    function () mymail_mail:set_text ( mail_count(mail_tmp_path.."/mymail_count") ) end)
+mymail_mail.timer:start()
+mymail_mail:buttons(mailicon:buttons())
+-- local gmail_mail = wibox.widget.textbox( "?" )
+-- gmail_mail.timer = timer{timeout=20}
+-- gmail_mail.timer:connect_signal("timeout",
+--     function () gmail_mail:set_text ( mail_count(mail_tmp_path.."/gmail_count") ) end)
+-- gmail_mail.timer:start()
+-- gmail_mail:buttons(mailicon:buttons())
+
+-- nVidia Optimus
+local optimus_icon = wibox.widget.imagebox()
+local optimus_overclocked = false
+optimus_icon:set_image(beautiful.widget_optimus_off)
+optimus_icon.timer = timer{timeout=3}
+optimus_icon.timer:connect_signal("timeout",
+    function ()
+        local f = io.open("/proc/acpi/bbswitch", "r")
+        local l = nil
+        if f ~= nil then
+            l = f:read()
+            if string.sub (l, 14) == "ON" then
+                if optimus_overclocked == true then
+                    optimus_icon:set_image(beautiful.widget_optimus_overclocked)
+                else
+                    optimus_icon:set_image(beautiful.widget_optimus_on)
+                end
+            else
+                optimus_icon:set_image(beautiful.widget_optimus_off)
+                optimus_overclocked = false
+            end
+            f:close()
+        else
+            optimus_icon:set_image(beautiful.widget_optimus_off)
+        end
+    end)
+optimus_icon.timer:start()
+optimus_icon:buttons(awful.util.table.join(
+    awful.button({ }, 1,
+        function ()
+            os.execute ("pgrep nvidia-settings || optirun nvidia-settings -c :8 &")
+        end
+    ),
+    awful.button({ }, 3,
+        function ()
+            os.execute ("optirun nvidia-settings -c :8 -a '[gpu:0]/GPUGraphicsClockOffset[2]=135' &")
+            os.execute ("optirun nvidia-settings -c :8 -a '[gpu:0]/GPUMemoryTransferRateOffset[2]=560' &")
+            optimus_overclocked = true
+        end
+    )
+))
+
+-- Wi-Fi / Ethernet widgets
+local wifi_widget_down = wibox.widget.textbox()
+local wifi_widget_up = wibox.widget.textbox()
+local icon_wifi = wibox.widget.imagebox()
+local icon_wifi_down_up = wibox.widget.imagebox()
+icon_wifi:set_image (beautiful.widget_wifi)
+icon_wifi_down_up:set_image (beautiful.widget_wifi_down_up)
+local wired_widget_down = wibox.widget.textbox()
+local wired_widget_up = wibox.widget.textbox()
+local icon_wired = wibox.widget.imagebox()
+local icon_wired_down_up = wibox.widget.imagebox()
+icon_wired:set_image (beautiful.widget_wired)
+icon_wired_down_up:set_image (beautiful.widget_wired_down_up)
+
+-- Network buttons
+function show_nload (interface)
+    os.execute ("pgrep --full --exact 'nload "..interface.."' || urxvt -e nload "..interface.." &")
+end
+function show_nethogs ()
+    os.execute ("pgrep nethogs || urxvt -e sudo nethogs &")
+end
+icon_wifi:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 3, show_nethogs)))
+wifi_widget_down:buttons(icon_wifi:buttons())
+icon_wifi_down_up:buttons(icon_wifi:buttons())
+wifi_widget_up:buttons(icon_wifi:buttons())
+icon_wired:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 3, show_nethogs)))
+wired_widget_down:buttons(icon_wired:buttons())
+icon_wired_down_up:buttons(icon_wired:buttons())
+wired_widget_up:buttons(icon_wired:buttons())
+
+-- VOL icon
+vicious.cache(vicious.widgets.volume)
+local volicon = wibox.widget.imagebox()
+volicon:set_image(beautiful.widget_vol)
+volicon:buttons(
+    awful.util.table.join(
+        awful.button({ }, 1, function () awful.util.spawn("urxvt -e alsamixer --view=all") end),
+        awful.button({ }, 4, function () os.execute("pgrep -x amixer || amixer set Master 1%+") end),
+        awful.button({ }, 5, function () os.execute("pgrep -x amixer || amixer set Master 1%-") end)
+    )
+)
+volpct = wibox.widget.textbox()
+volpct:buttons(volicon:buttons())
+vicious.register(volpct, vicious.widgets.volume, "$1% ", nil, "Master")
+
+-- CPU icon
+function show_htop ()
+    os.execute ("pgrep htop || urxvt -e htop &")
+end
+local cpuicon = wibox.widget.imagebox()
+cpuicon:set_image(beautiful.widget_cpu)
+cpuicon:buttons(awful.util.table.join(awful.button({ }, 1, show_htop)))
+cpu = wibox.widget.textbox()
+cpu.fit = function (box,w,h)
+  return 30,0
+end
+vicious.register(cpu, vicious.widgets.cpu, '<span color="#677ecc"> $1%</span>', 2)
+cpu:buttons(cpuicon:buttons())
+
+-- Memory icon
+function show_atop ()
+    os.execute ("pgrep atop || urxvt -e atop &")
+end
+local memicon = wibox.widget.imagebox()
+memicon:set_image(beautiful.widget_ram)
+memicon:buttons(awful.util.table.join(awful.button({ }, 1, show_atop)))
+mem = wibox.widget.textbox()
+vicious.register(mem, vicious.widgets.mem, '<span color="#639150"> $1/$5% </span>', 2)
+mem:buttons(memicon:buttons())
+
+-- Disk icon
+function show_iotop ()
+    os.execute ("pgrep iotop || urxvt -e sudo iotop --delay=4 &")
+end
+local diskicon = wibox.widget.imagebox()
+diskicon:set_image(beautiful.widget_disk)
+diskicon:buttons(awful.util.table.join(awful.button({ }, 1, show_iotop)))
+disk = wibox.widget.textbox()
+vicious.register(disk, vicious.widgets.fs, '<span color="#cc7c4b">${/mnt/bcache0 avail_gb}Gb </span>', 15)
+disk:buttons(diskicon:buttons())
+
+vicious.cache(vicious.widgets.net)
+vicious.register(wifi_widget_down, vicious.widgets.net, '<span color="#baa53f">${wifi0 down_mb}</span>', 2)
+vicious.register(wifi_widget_up, vicious.widgets.net, '<span color="#b165bd">${wifi0 up_mb}</span>', 2)
+vicious.register(wired_widget_down, vicious.widgets.net, '<span color="#baa53f">${wan0 down_mb}</span>', 2)
+vicious.register(wired_widget_up, vicious.widgets.net, '<span color="#b165bd">${wan0 up_mb}</span>', 2)
+
+
+
 ----< Wibar >--------------------------------------------------
 --
 -- Create a textclock widget
@@ -213,7 +409,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 15.5 })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -227,6 +423,38 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+
+			spacer,
+			mailicon,
+			mymail_mail,
+            -- myslash = wibox.widget.textbox("+")
+            -- myslash:buttons(mailicon:buttons())
+            -- right_layout:add(myslash)
+            -- right_layout:add(gmail_mail)
+			spacer,
+			cpuicon,
+			cpu,
+			memicon,
+			mem,
+			diskicon,
+			disk,
+			optimus_icon,
+			spacer,
+			baticon,
+			batpct,
+			icon_wifi,
+			wifi_widget_down,
+			icon_wifi_down_up,
+			wifi_widget_up,
+			spacer,
+			icon_wired,
+			wired_widget_down,
+			icon_wired_down_up,
+			wired_widget_up,
+			spacer,
+			volicon,
+			volpct,
+
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
@@ -275,9 +503,9 @@ globalkeys = gears.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
+    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative(-1) end,
               {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative( 1) end,
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
@@ -573,9 +801,9 @@ awful.rules.rules = {
     { rule = { class = "Qt Jambi application" },
       properties = { tag = "1" } },
     { rule = { class = "Pidgin" },
-      properties = { tag = "9" } },
+      properties = { tag = "+" } },
     { rule = { class = "Stardict" },
-      properties = { tag = "8" } },
+      properties = { tag = "-" } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "Texreport-gtk" },
@@ -677,7 +905,7 @@ awful.rules.rules = {
     { rule = { class = "Eiskaltdcpp" },
       properties = { tag = "1" } },
     { rule = { class = "Ekiga" },
-      properties = { tag = "9" } },
+      properties = { tag = "+" } },
     { rule = { class = "Googleearth-bin" },
       properties = { tag = "1" } },
     { rule = { class = "Links" },
@@ -685,7 +913,7 @@ awful.rules.rules = {
     { rule = { class = "Linphone" },
       properties = { tag = "1" } },
     { rule = { class = "psi" },
-      properties = { tag = "9" } },
+      properties = { tag = "+" } },
     { rule = { class = "Transmission" },
       properties = { tag = "1" } },
     { rule = { class = "Vncviewer" },

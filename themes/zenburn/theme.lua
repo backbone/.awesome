@@ -130,6 +130,48 @@ theme.titlebar_maximized_button_normal_inactive = themes_path .. "zenburn/titleb
 -- }}}
 -- }}}
 
+-- {{{ Widgets
+local home = os.getenv("HOME")
+local cfgpath = home.."/.config/awesome"
+
+theme.widget_disk = cfgpath .. "/Icons/16x16/hdd_clear.png"
+theme.widget_cpu = cfgpath .. "/themes/default/widgets/cpu.png"
+theme.widget_ac = cfgpath .. "/themes/default/widgets/ac.png"
+theme.widget_acblink = cfgpath .. "/themes/default/widgets/acblink.png"
+theme.widget_blank = cfgpath .. "/themes/default/widgets/blank.png"
+theme.widget_batfull = cfgpath .. "/themes/default/widgets/batfull.png"
+theme.widget_batmed = cfgpath .. "/themes/default/widgets/batmed.png"
+theme.widget_batlow = cfgpath .. "/themes/default/widgets/batlow.png"
+theme.widget_batempty = cfgpath .. "/themes/default/widgets/batempty.png"
+theme.widget_vol = cfgpath .. "/themes/default/widgets/vol.png"
+theme.widget_mute = cfgpath .. "/themes/default/widgets/mute.png"
+theme.widget_pac = cfgpath .. "/themes/default/widgets/pac.png"
+theme.widget_pacnew = cfgpath .. "/themes/default/widgets/pacnew.png"
+theme.widget_mail = cfgpath .. "/themes/default/widgets/mail.png"
+theme.widget_mailnew = cfgpath .. "/themes/default/widgets/mailnew.png"
+theme.widget_optimus_off = cfgpath .. "/themes/default/widgets/optimus_off.png"
+theme.widget_optimus_on = cfgpath .. "/themes/default/widgets/optimus_on.png"
+theme.widget_optimus_overclocked = cfgpath .. "/themes/default/widgets/optimus_overclocked.png"
+theme.widget_temp = cfgpath .. "/themes/default/widgets/temp.png"
+theme.widget_tempwarn = cfgpath .. "/themes/default/widgets/tempwarm.png"
+theme.widget_temphot = cfgpath .. "/themes/default/widgets/temphot.png"
+theme.widget_wifi = cfgpath .. "/themes/default/widgets/wifi.png"
+theme.widget_nowifi = cfgpath .. "/themes/default/widgets/nowifi.png"
+theme.widget_wired = cfgpath .. "/Icons/16x16/net-wired.png"
+theme.widget_wired_down_up = cfgpath .. "/Icons/16x16/down_up.png"
+theme.widget_wifi_down_up = cfgpath .. "/Icons/16x16/down_up.png"
+theme.widget_mpd = cfgpath .. "/themes/default/widgets/mpd.png"
+theme.widget_play = cfgpath .. "/themes/default/widgets/play.png"
+theme.widget_pause = cfgpath .. "/themes/default/widgets/pause.png"
+theme.widget_ram = cfgpath .. "/themes/default/widgets/ram.png"
+theme.widget_mem = cfgpath .. "/themes/default/tp/ram.png"
+theme.widget_swap = cfgpath .. "/themes/default/tp/swap.png"
+theme.widget_fs = cfgpath .. "/themes/default/tp/fs_01.png"
+theme.widget_fs2 = cfgpath .. "/themes/default/tp/fs_02.png"
+theme.widget_up = cfgpath .. "/themes/default/tp/up.png"
+theme.widget_down = cfgpath .. "/themes/default/tp/down.png"
+-- }}}
+
 return theme
 
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
