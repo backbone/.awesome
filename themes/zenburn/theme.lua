@@ -4,10 +4,13 @@
 -------------------------------
 
 local themes_path = require("gears.filesystem").get_themes_dir()
+local home = os.getenv("HOME")
+local cfgpath = home.."/.config/awesome"
 
 -- {{{ Main
 local theme = {}
-theme.wallpaper = themes_path .. "zenburn/zenburn-background.png"
+--theme.wallpaper = themes_path .. "zenburn/zenburn-background.png"
+theme.wallpaper = cfgpath .. "/wallpaper.slink"
 -- }}}
 
 -- {{{ Styles
@@ -131,9 +134,6 @@ theme.titlebar_maximized_button_normal_inactive = themes_path .. "zenburn/titleb
 -- }}}
 
 -- {{{ Widgets
-local home = os.getenv("HOME")
-local cfgpath = home.."/.config/awesome"
-
 theme.widget_disk = cfgpath .. "/Icons/16x16/hdd_clear.png"
 theme.widget_cpu = cfgpath .. "/themes/default/widgets/cpu.png"
 theme.widget_ac = cfgpath .. "/themes/default/widgets/ac.png"
