@@ -9,8 +9,8 @@ while [ 1 ]; do
 	if [[ "$val" == "" ]]; then val = "?"; fi
 	echo $val > $MAILDIR/mymail_count
 	sleep 30
-	val=$(timeout -k 30 25 ~/.config/awesome/mail_loop_gmail.py)
-	if [[ "$val" == "" ]]; then val = "?"; fi
-	echo $val > $MAILDIR/gmail_count
-	sleep 30
+	#val=$(timeout -k 30 25 ~/.config/awesome/mail_loop_gmail.py)
+	#if [[ "$val" == "" ]]; then val = "?"; fi
+	#echo $val > $MAILDIR/gmail_count
+	#sleep 30
 done
