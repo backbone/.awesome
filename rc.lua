@@ -491,13 +491,13 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
-    awful.key({ modkey,           }, "j",
+    awful.key({ modkey,           }, "k",
         function ()
             awful.client.focus.byidx( 1)
         end,
         {description = "focus next by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "k",
+    awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx(-1)
         end,
@@ -507,13 +507,13 @@ globalkeys = gears.table.join(
               {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
+    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx(  1)    end,
               {description = "swap with next client by index", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
+    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative(-1) end,
-              {description = "focus the next screen", group = "screen"}),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative( 1) end,
+              {description = "focus the next screen", group = "screen"}),
+    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
@@ -550,9 +550,10 @@ globalkeys = gears.table.join(
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
-
-    -- awful.key({ modkey, "Shift"   }, "u",     function () awful.client.incwfact( 0.05)    end),
-    -- awful.key({ modkey, "Shift"   }, "p",     function () awful.client.incwfact(-0.05)    end),
+    awful.key({ modkey, "Shift"   }, "u",     function () awful.client.incwfact( 0.05)    end,
+              {description = "increase the number of rows", group = "layout"}),
+    awful.key({ modkey, "Shift"   }, "p",     function () awful.client.incwfact(-0.05)    end,
+              {description = "decrease the number of rows", group = "layout"}),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
@@ -584,23 +585,23 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- Volume control --
-    awful.key({ modkey }, ".", function () os.execute("pgrep -x amixer || amixer set Master 5%+") end),
-    awful.key({ modkey }, ",", function () os.execute("pgrep -x amixer || amixer set Master 5%-") end),
-    awful.key({ modkey }, "/", function () awful.util.spawn("amixer sset Master toggle") end),
-    awful.key({ }, "XF86AudioRaiseVolume", function () os.execute("pgrep -x amixer || amixer set Master 5%+") end),
-    awful.key({ }, "XF86AudioLowerVolume", function () os.execute("pgrep -x amixer || amixer set Master 5%-") end),
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer sset Master toggle") end),
+    awful.key({ modkey }, ".", function () os.execute("pgrep -x amixer || amixer set Master 5%+") end, {description = "increase volume by 5%", group = "sound"}),
+    awful.key({ modkey }, ",", function () os.execute("pgrep -x amixer || amixer set Master 5%-") end, {description = "decrease volume by 5%", group = "sound"}),
+    awful.key({ modkey }, "/", function () awful.util.spawn("amixer sset Master toggle") end, {description = "mute / unmute", group = "sound"}),
+    awful.key({ }, "XF86AudioRaiseVolume", function () os.execute("pgrep -x amixer || amixer set Master 5%+") end, {description = "increase volume by 5%", group = "sound"}),
+    awful.key({ }, "XF86AudioLowerVolume", function () os.execute("pgrep -x amixer || amixer set Master 5%-") end, {description = "decrease volume by 5%", group = "sound"}),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer sset Master toggle") end, {description = "mute / unmute", group = "sound"}),
 
     -- Player control --
-    awful.key({ modkey }, "p",function () awful.util.spawn( "mpc play" ); awful.util.spawn( "audacious -p" )  end),
-    awful.key({ modkey }, ";",function () awful.util.spawn( "mpc pause" ); awful.util.spawn( "audacious -u" )  end),
-    awful.key({ modkey }, "'",function () awful.util.spawn( "mpc prev" ); awful.util.spawn( "audacious -r" )  end),
-    awful.key({ modkey }, "\\",function () awful.util.spawn( "mpc next" ); awful.util.spawn( "audacious -f" )  end),
+    awful.key({ modkey }, "p",function () awful.util.spawn( "mpc play" ); awful.util.spawn( "audacious -p" ) end, {description = "start play", group = "sound"} ),
+    awful.key({ modkey }, ";",function () awful.util.spawn( "mpc pause" ); awful.util.spawn( "audacious -u" ) end, {description = "pause / play", group = "sound"} ),
+    awful.key({ modkey }, "'",function () awful.util.spawn( "mpc prev" ); awful.util.spawn( "audacious -r" ) end, {description = "play previous song", group = "sound"} ),
+    awful.key({ modkey }, "\\",function () awful.util.spawn( "mpc next" ); awful.util.spawn( "audacious -f" ) end, {description = "play next song", group = "sound"} ),
 
     awful.key({        }, "Print", function () awful.util.spawn_with_shell ("DATE=`date +%Y%m%d_%H%M%S`;"..
-                                   "xsnap -nogui -file $HOME/screenshots/$DATE && gqview -r $HOME/screenshots/$DATE.png") end),
+                                   "xsnap -nogui -file $HOME/screenshots/$DATE && gqview -r $HOME/screenshots/$DATE.png") end, {description = "print screen", group = "screen"}),
 	-- Lock Screen --
-    awful.key({ "Mod4"   }, "l", function () os.execute ("xscreensaver-command --lock") end)
+    awful.key({ "Mod4"   }, "l", function () os.execute ("xscreensaver-command --lock") end, {description = "Lock screen", group = "login"})
 )
 
 clientkeys = gears.table.join(
