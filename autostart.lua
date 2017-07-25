@@ -1,6 +1,6 @@
 os.execute ("setxkbmap -layout 'us,ru'")
 os.execute ("setxkbmap -option 'grp:shift_toggle,grp_led:scroll,terminate:ctrl_alt_bksp'")
-os.execute (os.getenv("HOME").."/.config/awesome/set_wall.sh "..os.getenv("HOME").."/.config/awesome/wallpaper.slink &")
+--os.execute (os.getenv("HOME").."/.config/awesome/set_wall.sh "..os.getenv("HOME").."/.config/awesome/wallpaper.slink &")
 os.execute ("pgrep xscreensaver || xscreensaver -no-splash &")
 os.execute ("pgrep mail_loop.sh || "..os.getenv("HOME").."/.config/awesome/mail_loop.sh &")
 os.execute ("pgrep wicd-client || wicd-gtk --tray &")
