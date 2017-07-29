@@ -269,7 +269,7 @@ local volicon = wibox.widget.imagebox()
 volicon:set_image(beautiful.widget_vol)
 volicon:buttons(
     awful.util.table.join(
-        awful.button({ }, 1, function () awful.util.spawn("urxvt -e alsamixer --view=all") end),
+        awful.button({ }, 1, function () os.execute("pgrep alsamixer || urxvt -e alsamixer --view=all &") end),
         awful.button({ }, 4, function () os.execute("pgrep -x amixer || amixer set Master 1%+") end),
         awful.button({ }, 5, function () os.execute("pgrep -x amixer || amixer set Master 1%-") end)
     )
