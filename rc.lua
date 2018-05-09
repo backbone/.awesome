@@ -234,18 +234,12 @@ optimus_icon:buttons(awful.util.table.join(
 ))
 
 -- Wi-Fi / Ethernet widgets
-local wifi_widget_down = wibox.widget.textbox()
-local wifi_widget_up = wibox.widget.textbox()
+local wifi_widget = wibox.widget.textbox()
 local icon_wifi = wibox.widget.imagebox()
-local icon_wifi_down_up = wibox.widget.imagebox()
 icon_wifi:set_image (beautiful.widget_wifi)
-icon_wifi_down_up:set_image (beautiful.widget_wifi_down_up)
-local wired_widget_down = wibox.widget.textbox()
-local wired_widget_up = wibox.widget.textbox()
+local wired_widget = wibox.widget.textbox()
 local icon_wired = wibox.widget.imagebox()
-local icon_wired_down_up = wibox.widget.imagebox()
 icon_wired:set_image (beautiful.widget_wired)
-icon_wired_down_up:set_image (beautiful.widget_wired_down_up)
 
 -- Network buttons
 function show_nload (interface)
@@ -254,14 +248,10 @@ end
 function show_nethogs ()
     os.execute ("pgrep nethogs || urxvt -e sudo nethogs &")
 end
-icon_wifi:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 3, show_nethogs)))
-wifi_widget_down:buttons(icon_wifi:buttons())
-icon_wifi_down_up:buttons(icon_wifi:buttons())
-wifi_widget_up:buttons(icon_wifi:buttons())
-icon_wired:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 3, show_nethogs)))
-wired_widget_down:buttons(icon_wired:buttons())
-icon_wired_down_up:buttons(icon_wired:buttons())
-wired_widget_up:buttons(icon_wired:buttons())
+icon_wifi:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 1, show_nethogs)))
+wifi_widget:buttons(icon_wifi:buttons())
+icon_wired:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 1, show_nethogs)))
+wired_widget:buttons(icon_wired:buttons())
 
 -- VOL icon
 vicious.cache(vicious.widgets.volume)
@@ -317,11 +307,11 @@ disk = wibox.widget.textbox()
 vicious.register(disk, vicious.widgets.fs, '<span color="#cc7c4b">${/mnt/bcache0 avail_gb}Gb </span>', 15)
 disk:buttons(diskicon:buttons())
 
-vicious.cache(vicious.widgets.net)
-vicious.register(wifi_widget_down, vicious.widgets.net, '<span color="#baa53f">${wifi0 down_mb}</span>', 2)
-vicious.register(wifi_widget_up, vicious.widgets.net, '<span color="#b165bd">${wifi0 up_mb}</span>', 2)
-vicious.register(wired_widget_down, vicious.widgets.net, '<span color="#baa53f">${wan0 down_mb}</span>', 2)
-vicious.register(wired_widget_up, vicious.widgets.net, '<span color="#b165bd">${wan0 up_mb}</span>', 2)
+--vicious.cache(vicious.widgets.net)
+--vicious.cache(wifi_widget)
+--vicious.cache(wired_widget)
+vicious.register(wifi_widget, vicious.widgets.net, '<span color="#A3D34D">${wifi0 down_mb}</span>^<span color="#DB5786">${wifi0 up_mb}</span>', 2)
+vicious.register(wired_widget, vicious.widgets.net, '<span color="#A3D34D">${wan0 down_mb}</span>^<span color="#DB5786">${wan0 up_mb}</span><span color="#848484">mb/s</span>', 2)
 
 
 
@@ -455,14 +445,10 @@ awful.screen.connect_for_each_screen(function(s)
 			baticon,
 			batpct,
 			icon_wifi,
-			wifi_widget_down,
-			icon_wifi_down_up,
-			wifi_widget_up,
+			wifi_widget,
 			spacer,
 			icon_wired,
-			wired_widget_down,
-			icon_wired_down_up,
-			wired_widget_up,
+			wired_widget,
 			spacer,
 			volicon,
 			volpct,
