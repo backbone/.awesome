@@ -279,6 +279,7 @@ volpct:buttons(volicon:buttons())
 vicious.register(volpct, vicious.widgets.volume, "$1% ", nil, "Master")
 
 -- CPU icon
+vicious.cache(vicious.widgets.cpu)
 function show_htop ()
     os.execute ("pgrep htop || urxvt -e htop &")
 end
@@ -293,6 +294,7 @@ vicious.register(cpu, vicious.widgets.cpu, '<span color="#677ecc"> $1%</span>', 
 cpu:buttons(cpuicon:buttons())
 
 -- Memory icon
+vicious.cache(vicious.widgets.mem)
 function show_atop ()
     os.execute ("pgrep atop || urxvt -e atop &")
 end
@@ -304,6 +306,7 @@ vicious.register(mem, vicious.widgets.mem, '<span color="#639150"> $1/$5% </span
 mem:buttons(memicon:buttons())
 
 -- Disk icon
+vicious.cache(vicious.widgets.fs)
 function show_iotop ()
     os.execute ("pgrep iotop || urxvt -e sudo iotop --delay=4 &")
 end
