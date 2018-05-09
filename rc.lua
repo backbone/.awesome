@@ -234,12 +234,11 @@ optimus_icon:buttons(awful.util.table.join(
 ))
 
 -- Wi-Fi / Ethernet widgets
-local wifi_widget = wibox.widget.textbox()
+local net_widget = wibox.widget.textbox()
+local icon_net = wibox.widget.imagebox()
+icon_net:set_image (beautiful.widget_wired)
 local icon_wifi = wibox.widget.imagebox()
 icon_wifi:set_image (beautiful.widget_wifi)
-local wired_widget = wibox.widget.textbox()
-local icon_wired = wibox.widget.imagebox()
-icon_wired:set_image (beautiful.widget_wired)
 
 -- Network buttons
 function show_nload (interface)
@@ -248,10 +247,9 @@ end
 function show_nethogs ()
     os.execute ("pgrep nethogs || urxvt -e sudo nethogs &")
 end
+icon_net:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 1, show_nethogs)))
 icon_wifi:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 1, show_nethogs)))
-wifi_widget:buttons(icon_wifi:buttons())
-icon_wired:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 1, show_nethogs)))
-wired_widget:buttons(icon_wired:buttons())
+vicious.register(net_widget, vicious.widgets.net, '<span color="#A3D34D">${wan0 down_mb}</span>^<span color="#DB5786">${wan0 up_mb}</span> <span color="#848484">mb/s</span> <span color="#A3D34D">${wifi0 down_mb}</span>^<span color="#DB5786">${wifi0 up_mb}</span>', 2)
 
 -- VOL icon
 vicious.cache(vicious.widgets.volume)
@@ -306,12 +304,6 @@ diskicon:buttons(awful.util.table.join(awful.button({ }, 1, show_iotop)))
 disk = wibox.widget.textbox()
 vicious.register(disk, vicious.widgets.fs, '<span color="#cc7c4b">${/mnt/bcache0 avail_gb}Gb </span>', 15)
 disk:buttons(diskicon:buttons())
-
---vicious.cache(vicious.widgets.net)
---vicious.cache(wifi_widget)
---vicious.cache(wired_widget)
-vicious.register(wifi_widget, vicious.widgets.net, '<span color="#A3D34D">${wifi0 down_mb}</span>^<span color="#DB5786">${wifi0 up_mb}</span>', 2)
-vicious.register(wired_widget, vicious.widgets.net, '<span color="#A3D34D">${wan0 down_mb}</span>^<span color="#DB5786">${wan0 up_mb}</span><span color="#848484">mb/s</span>', 2)
 
 
 
@@ -444,11 +436,10 @@ awful.screen.connect_for_each_screen(function(s)
 			spacer,
 			baticon,
 			batpct,
-			icon_wifi,
-			wifi_widget,
 			spacer,
-			icon_wired,
-			wired_widget,
+			icon_net,
+			net_widget,
+			icon_wifi,
 			spacer,
 			volicon,
 			volpct,
