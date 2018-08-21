@@ -249,6 +249,7 @@ function show_nethogs ()
 end
 icon_net:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 1, show_nethogs)))
 icon_wifi:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 1, show_nethogs)))
+net_widget:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("") end), awful.button({ }, 1, show_nethogs)))
 vicious.register(net_widget, vicious.widgets.net, '<span color="#A3D34D">${wan0 down_mb}</span>^<span color="#DB5786">${wan0 up_mb}</span> <span color="#848484">mb/s</span> <span color="#A3D34D">${wifi0 down_mb}</span>^<span color="#DB5786">${wifi0 up_mb}</span>', 2)
 
 -- VOL icon
