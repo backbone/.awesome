@@ -258,9 +258,11 @@ local volicon = wibox.widget.imagebox()
 volicon:set_image(beautiful.widget_vol)
 volicon:buttons(
     awful.util.table.join(
-        awful.button({ }, 1, function () os.execute("pgrep alsamixer || urxvt -e alsamixer --view=all &") end),
-        awful.button({ }, 4, function () os.execute("pgrep -x amixer || amixer set Master 1%+") end),
-        awful.button({ }, 5, function () os.execute("pgrep -x amixer || amixer set Master 1%-") end)
+        -- awful.button({ }, 1, function () os.execute("pgrep alsamixer || urxvt -e alsamixer --view=all &") end),
+        awful.button({ }, 1, function () os.execute("pgrep pavucontrol || pavucontrol &") end),
+        awful.button({ }, 3, function () os.execute("pgrep alsamixer || urxvt -e alsamixer -c 1 &") end),
+        awful.button({ }, 4, function () os.execute("pgrep -x amixer || amixer set Master 2%+") end),
+        awful.button({ }, 5, function () os.execute("pgrep -x amixer || amixer set Master 2%-") end)
     )
 )
 volpct = wibox.widget.textbox()
@@ -303,7 +305,7 @@ local diskicon = wibox.widget.imagebox()
 diskicon:set_image(beautiful.widget_disk)
 diskicon:buttons(awful.util.table.join(awful.button({ }, 1, show_iotop)))
 disk = wibox.widget.textbox()
-vicious.register(disk, vicious.widgets.fs, '<span color="#cc7c4b">${/mnt/bcache0 avail_gb}Gb </span>', 15)
+vicious.register(disk, vicious.widgets.fs, '<span color="#cc7c4b">${/home avail_gb}Gb </span>', 15)
 disk:buttons(diskicon:buttons())
 
 
