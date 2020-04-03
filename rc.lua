@@ -1025,3 +1025,12 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+-- Show titlebar for floating windows only. https://www.reddit.com/r/awesomewm/comments/bki1md/show_titlebar_only_when_window_is_floating
+client.connect_signal("property::floating", function(c)
+    if c.floating then
+        awful.titlebar.show(c)
+    else
+        awful.titlebar.hide(c)
+    end
+end)
