@@ -695,7 +695,7 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
+      properties = { border_width = naughty.config.defaults.border_width,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      raise = true,
@@ -1026,11 +1026,15 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
--- Show titlebar for floating windows only. https://www.reddit.com/r/awesomewm/comments/bki1md/show_titlebar_only_when_window_is_floating
-client.connect_signal("property::floating", function(c)
-    if c.floating then
-        awful.titlebar.show(c)
-    else
-        awful.titlebar.hide(c)
+-- Borders for floating windows
+screen.connect_signal("arrange", function(s)
+    for _, c in pairs(s.clients) do
+        if c.floating == true then
+            c.border_width = naughty.config.defaults.border_width
+            awful.titlebar.show(c)
+        else
+            c.border_width = 0
+            awful.titlebar.hide(c)
+        end
     end
 end)
