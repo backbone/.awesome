@@ -117,8 +117,8 @@ end
 menu_items = freedesktop.menu.new()
 myawesomemenu = {
    { "next wall", cfgpath.."/set_wall.sh "..home.."/wallpapers/" },
-   { "pm-suspend-hybrid", "sudo pm-suspend-hybrid" },
-   { "pm-hibernate", "sudo pm-hibernate" },
+   { "suspend-hybrid", "sh -c 'xscreensaver-command -lock && sudo pm-suspend-hybrid'" },
+   { "hibernate", "sh -c 'xscreensaver-command -lock && sudo pm-hibernate'" },
    { "lock", "xscreensaver-command --lock" },
    { "reboot", "sudo shutdown -r now" },
    { "poweroff", "sudo poweroff" },
