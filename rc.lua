@@ -250,7 +250,7 @@ end
 icon_net:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wan0") end), awful.button({ }, 1, show_nethogs)))
 icon_wifi:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("wifi0") end), awful.button({ }, 1, show_nethogs)))
 net_widget:buttons(awful.util.table.join(awful.button({ }, 1, function () show_nload("") end), awful.button({ }, 1, show_nethogs)))
-vicious.register(net_widget, vicious.widgets.net, '<span color="#A3D34D">${wan0 down_mb}</span>^<span color="#DB5786">${wan0 up_mb}</span> <span color="#848484">mb/s</span> <span color="#A3D34D">${wifi0 down_mb}</span>^<span color="#DB5786">${wifi0 up_mb}</span>', 2)
+vicious.register(net_widget, vicious.widgets.net, '<span color="#AEE350">${wan0 down_mb}</span>^<span color="#EB598D">${wan0 up_mb}</span> <span color="#E2E2E2">mb/s</span> <span color="#ABE347">${wifi0 down_mb}</span>^<span color="#E84D84">${wifi0 up_mb}</span>', 2)
 
 -- VOL icon
 vicious.cache(vicious.widgets.volume)
@@ -281,7 +281,7 @@ cpu = wibox.widget.textbox()
 cpu.fit = function (box,w,h)
   return 30,0
 end
-vicious.register(cpu, vicious.widgets.cpu, '<span color="#677ecc"> $1%</span>', 2)
+vicious.register(cpu, vicious.widgets.cpu, '<span color="#6FE6F2"> $1%</span>', 2)
 cpu:buttons(cpuicon:buttons())
 
 -- Memory icon
@@ -293,7 +293,7 @@ local memicon = wibox.widget.imagebox()
 memicon:set_image(beautiful.widget_ram)
 memicon:buttons(awful.util.table.join(awful.button({ }, 1, show_atop)))
 mem = wibox.widget.textbox()
-vicious.register(mem, vicious.widgets.mem, '<span color="#639150"> $1/$5% </span>', 2)
+vicious.register(mem, vicious.widgets.mem, '<span color="#7CD059"> $1/$5% </span>', 2)
 mem:buttons(memicon:buttons())
 
 -- Disk icon
@@ -305,7 +305,7 @@ local diskicon = wibox.widget.imagebox()
 diskicon:set_image(beautiful.widget_disk)
 diskicon:buttons(awful.util.table.join(awful.button({ }, 1, show_iotop)))
 disk = wibox.widget.textbox()
-vicious.register(disk, vicious.widgets.fs, '<span color="#cc7c4b">${/home avail_gb}Gb </span>', 15)
+vicious.register(disk, vicious.widgets.fs, '<span color="#E68347">${/home avail_gb}Gb </span>', 15)
 disk:buttons(diskicon:buttons())
 
 
