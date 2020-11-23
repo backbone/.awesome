@@ -117,11 +117,13 @@ end
 menu_items = freedesktop.menu.new()
 myawesomemenu = {
    { "next wall", cfgpath.."/set_wall.sh "..home.."/wallpapers/" },
-   { "suspend-hybrid", "sh -c 'xscreensaver-command -lock && sudo pm-suspend-hybrid'" },
-   { "hibernate", "sh -c 'xscreensaver-command -lock && sudo pm-hibernate'" },
+   { "suspend", "sh -c 'xscreensaver-command -lock && loginctl suspend'" },
+   { "hibernate", "sh -c 'xscreensaver-command -lock && loginctl hibernate'" },
+   { "hybrid-sleep", "sh -c 'xscreensaver-command -lock && loginctl hybrid-sleep'" },
+   { "susp+hibernate", "sh -c 'xscreensaver-command -lock && loginctl suspend-then-hibernate'" },
    { "lock", "xscreensaver-command --lock" },
-   { "reboot", "sudo shutdown -r now" },
-   { "poweroff", "sudo poweroff" },
+   { "reboot", "loginctl reboot" },
+   { "poweroff", "loginctl poweroff" },
    { "hotkeys", function() return false, hotkeys_popup.show_help end},
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
