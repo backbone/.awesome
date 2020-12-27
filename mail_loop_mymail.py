@@ -17,7 +17,7 @@ def IMAP_starttls(self, keyfile=None, certfile=None,cert_reqs=ssl.CERT_NONE,ca_c
   self.sock = ssl.wrap_socket(self.sock, keyfile, certfile,cert_reqs=cert_reqs,ca_certs=ca_certs)
   self.file = self.sock.makefile('rb')
 
-imaplib.IMAP4.__dict__['starttls']=IMAP_starttls
+setattr(imaplib, 'starttls', IMAP_starttls)
 imaplib.Commands['STARTTLS']=('NONAUTH',)
 
 try:
