@@ -14,7 +14,7 @@ theme.wallpaper = cfgpath .. "/wallpaper.slink"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "sans 8"
+theme.font      = "Terminus 10"
 
 -- {{{ Colors
 theme.fg_normal  = "#DCDCCC"
@@ -69,8 +69,8 @@ theme.mouse_finder_color = "#CC9393"
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_height = 15
-theme.menu_width  = 100
+theme.menu_height = 32
+theme.menu_width  = 256
 -- }}}
 
 -- {{{ Icons

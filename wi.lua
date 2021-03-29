@@ -15,6 +15,7 @@ baticon:set_image(beautiful.widget_batfull)
 
 -- Charge %
 batpct = wibox.widget.textbox()
+batpct.font = "Terminus 10"
 vicious.register(batpct, vicious.widgets.bat, function(widget, args)
   bat_state  = args[1]
   bat_charge = args[2]

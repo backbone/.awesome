@@ -44,7 +44,7 @@ naughty.config.defaults.position = "top_right"
 naughty.config.defaults.margin = 8
 naughty.config.defaults.gap = 1
 naughty.config.defaults.ontop = true
-naughty.config.defaults.font = "terminus 9"
+naughty.config.defaults.font = "terminus 10"
 naughty.config.defaults.icon = nil
 naughty.config.defaults.icon_size = 256
 naughty.config.defaults.fg = beautiful.fg_tooltip
@@ -281,7 +281,7 @@ cpuicon:set_image(beautiful.widget_cpu)
 cpuicon:buttons(awful.util.table.join(awful.button({ }, 1, show_htop)))
 cpu = wibox.widget.textbox()
 cpu.fit = function (box,w,h)
-  return 30,0
+  return 45,0
 end
 vicious.register(cpu, vicious.widgets.cpu, '<span color="#6FE6F2"> $1%</span>', 2)
 cpu:buttons(cpuicon:buttons())
@@ -408,7 +408,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 15.5 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 14.5 })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
