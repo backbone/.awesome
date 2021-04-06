@@ -50,7 +50,7 @@ naughty.config.defaults.icon_size = 256
 naughty.config.defaults.fg = beautiful.fg_tooltip
 naughty.config.defaults.bg = beautiful.bg_tooltip
 naughty.config.defaults.border_color = beautiful.border_tooltip
-naughty.config.defaults.border_width = 2
+naughty.config.defaults.border_width = 0
 naughty.config.defaults.hover_timeout = nil
 
 ----< Error handling >------------------------------------------------
@@ -1029,14 +1029,15 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 -- Borders for floating windows
-screen.connect_signal("arrange", function(s)
-    for _, c in pairs(s.clients) do
-        if c.floating == true then
-            c.border_width = naughty.config.defaults.border_width
+client.connect_signal("property::floating", function(c)
+        if c.floating then
+            if c.titlebar == nil then
+                c:emit_signal("request::titlebars", "rules", {})
+            end
+            c.border_width = 2
             awful.titlebar.show(c)
         else
             c.border_width = 0
             awful.titlebar.hide(c)
         end
-    end
 end)
