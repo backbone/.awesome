@@ -737,7 +737,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = titlebars_enabled }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -1030,14 +1030,28 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Borders for floating windows
 client.connect_signal("property::floating", function(c)
-        if c.floating then
+        if c.maximized or c.fullscreen then return end
+
+        if c.floating and not c.maximized and not c.fullscreen then
             if c.titlebar == nil then
-                c:emit_signal("request::titlebars", "rules", {})
+               c:emit_signal("request::titlebars", "rules", {})
             end
-            c.border_width = 2
             awful.titlebar.show(c)
+            c.border_width = 2
         else
-            c.border_width = 0
             awful.titlebar.hide(c)
+            c.border_width = 0
+        end
+end)
+
+client.connect_signal("property::maximized", function(c)
+        if c.maximized or c.fullscreen or not c.floating then
+            awful.titlebar.hide(c)
+            c.border_width = 0
+        else
+            if c.floating then
+              awful.titlebar.show(c)
+              c.border_width = 2
+            end
         end
 end)
