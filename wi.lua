@@ -42,7 +42,7 @@ vicious.register(batpct, vicious.widgets.bat, function(widget, args)
   end
 
   return args[2] .. "% "
-end, nil, "BAT0")
+end, nil, "BAT1")
 
 function popup_bat()
   local state = ""
