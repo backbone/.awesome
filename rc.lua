@@ -586,7 +586,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "\\",function () awful.util.spawn( "mpc next" ); awful.util.spawn( "audacious -f" ) end, {description = "play next song", group = "sound"} ),
 
     awful.key({        }, "Print", function () awful.util.spawn_with_shell ("DATE=`date +%Y%m%d_%H%M%S`;"..
-                                   "xsnap -nogui -file $HOME/screenshots/$DATE && gqview -r $HOME/screenshots/$DATE.png") end, {description = "print screen", group = "screen"}),
+                                   "xsnap -nogui -file $HOME/screenshots/$DATE && geeqie -r $HOME/screenshots/$DATE.png") end, {description = "print screen", group = "screen"}),
 	-- Lock Screen --
     awful.key({ "Mod4"   }, "l", function () os.execute ("xscreensaver-command --lock") end, {description = "Lock screen", group = "login"})
 )
