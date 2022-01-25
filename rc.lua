@@ -310,7 +310,35 @@ disk = wibox.widget.textbox()
 vicious.register(disk, vicious.widgets.fs, '<span color="#E68347">${/ avail_gb}/${/home avail_gb}/${/mnt/1tb avail_gb}Gb </span>', 15)
 disk:buttons(diskicon:buttons())
 
+local mywibox_height = 14.5
+local function update_quake_console(cli)
+    if cli == nil then
+        for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole" end)
+        do
+            cli = c
+            break
+        end
+    end
+    if cli == nil then return end
 
+    if (not cli.hidden) then
+        cli.floating = true
+        if cli.maximized then
+            cli.border_width = 0
+        else
+            cli.border_width = 2
+            cli.width=awful.screen.focused().workarea.width * 0.96
+            cli.height=awful.screen.focused().workarea.height * 0.7
+            cli.x = awful.screen.focused().workarea.width * 0.02
+            cli.y = awful.screen.focused().workarea.height * 0.3 + mywibox_height
+        end
+        cli.ontop = true
+        cli:move_to_screen(awful.screen.focused ())
+        cli:tags({awful.screen.focused().selected_tag})
+        cli.skip_taskbar = true
+        client.focus = cli
+    end
+end
 
 ----< Wibar >--------------------------------------------------
 --
@@ -408,7 +436,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 14.5 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = mywibox_height })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -587,8 +615,19 @@ globalkeys = gears.table.join(
 
     awful.key({        }, "Print", function () awful.util.spawn_with_shell ("DATE=`date +%Y%m%d_%H%M%S`;"..
                                    "xsnap -nogui -file $HOME/screenshots/$DATE && geeqie -r $HOME/screenshots/$DATE.png") end, {description = "print screen", group = "screen"}),
-	-- Lock Screen --
-    awful.key({ "Mod4"   }, "l", function () os.execute ("xscreensaver-command --lock") end, {description = "Lock screen", group = "login"})
+    -- Lock Screen --
+    awful.key({ "Mod4"   }, "l", function () os.execute ("xscreensaver-command --lock") end, {description = "Lock screen", group = "login"}),
+
+    -- Quake Console --
+    awful.key({ modkey }, "grave",
+        function ()
+            os.execute ("pgrep -O1 -f QuakeConsole || urxvt -name QuakeConsole -title QuakeConsole &")
+            for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole" end)
+            do c.hidden = not c.hidden end
+            update_quake_console(c)
+        end,
+        {description = "toggle quake console", group = "quake"}
+    )
 )
 
 clientkeys = gears.table.join(
@@ -971,6 +1010,7 @@ client.connect_signal("manage", function (c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
+    if c.name == "QuakeConsole" then update_quake_console(c) end
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -1030,7 +1070,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 client.connect_signal("property::floating", function(c)
         if c.maximized or c.fullscreen then return end
 
-        if c.floating and not c.maximized and not c.fullscreen then
+        if c.floating and not c.maximized and not c.fullscreen and not c.name == "QuakeConsole" then
             if c.titlebar == nil then
                c:emit_signal("request::titlebars", "rules", {})
             end
@@ -1048,8 +1088,10 @@ client.connect_signal("property::maximized", function(c)
             c.border_width = 0
         else
             if c.floating then
-              awful.titlebar.show(c)
-              c.border_width = 2
+                if not c.name == "QuakeConsole" then
+                    awful.titlebar.show(c)
+                    c.border_width = 2
+                end
             end
         end
 end)
