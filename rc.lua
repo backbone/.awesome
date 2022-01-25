@@ -327,10 +327,6 @@ local function update_quake_console(cli)
             cli.border_width = 0
         else
             cli.border_width = 2
-            cli.width=awful.screen.focused().workarea.width * 0.96
-            cli.height=awful.screen.focused().workarea.height * 0.7
-            cli.x = awful.screen.focused().workarea.width * 0.02
-            cli.y = awful.screen.focused().workarea.height * 0.3 + mywibox_height
         end
         cli.ontop = true
         cli:move_to_screen(awful.screen.focused ())
@@ -784,6 +780,14 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true; border_width = 2; }
     },
 
+    { rule = { name = "QuakeConsole" },
+      properties = {
+          width=awful.screen.focused().workarea.width * 0.96,
+          height=awful.screen.focused().workarea.height * 0.3,
+          x = awful.screen.focused().workarea.width * 0.02,
+          y = awful.screen.focused().workarea.height * 0.7 + mywibox_height
+      }
+    },
 --    { rule = { class = "URxvt" },
 --      properties = { tag = "2" } },
 --    { rule = { class = "Firefox" },
