@@ -311,13 +311,7 @@ vicious.register(disk, vicious.widgets.fs, '<span color="#E68347">${/ avail_gb}/
 disk:buttons(diskicon:buttons())
 
 local mywibox_height = 14.5
-local function update_quake_console(cli)
-    if cli == nil then
-        for c in awful.client.iterate(function (c) return string.find(c.instance, "QuakeConsole") end)
-        do cli = c end
-    end
-    if cli == nil then return end
-
+local function update_quake_console_real(cli)
     if (not cli.hidden) then
         cli.floating = true
         if not cli.fullscreen then cli.ontop = true end
@@ -325,6 +319,16 @@ local function update_quake_console(cli)
         cli:tags({awful.screen.focused().selected_tag})
         cli.skip_taskbar = true
         client.focus = cli
+    end
+end
+local function update_quake_console(cli)
+    if cli == nil then
+        for c in awful.client.iterate(function (c) return string.find(c.instance, "QuakeConsole") end)
+        do
+            update_quake_console_real(c)
+        end
+    else
+        update_quake_console_real(cli)
     end
 end
 
@@ -338,7 +342,10 @@ mytextclock:buttons(gears.table.join(awful.button({ }, 1,
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
+                    awful.button({ }, 1, function(t)
+                                             t:view_only()
+                                             update_quake_console()
+                                         end),
                     awful.button({ modkey }, 1, function(t)
                                               if client.focus then
                                                   client.focus:move_to_tag(t)
@@ -350,8 +357,14 @@ local taglist_buttons = gears.table.join(
                                                   client.focus:toggle_tag(t)
                                               end
                                           end),
-                    awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end)
+                    awful.button({ }, 4, function(t)
+                                             awful.tag.viewprev(t.screen)
+                                             update_quake_console()
+                                         end),
+                    awful.button({ }, 5, function(t)
+                                             awful.tag.viewnext(t.screen)
+                                             update_quake_console()
+                                         end)
                 )
 
 local tasklist_buttons = gears.table.join(
@@ -473,8 +486,8 @@ end)
 --
 root.buttons(gears.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewprev),
-    awful.button({ }, 5, awful.tag.viewnext)
+    awful.button({ }, 4, function () awful.tag.viewprev(); update_quake_console() end),
+    awful.button({ }, 5, function () awful.tag.viewnext(); update_quake_console() end)
 ))
 
 ----< Key bindings >--------------------------------------------------
@@ -482,11 +495,20 @@ root.buttons(gears.table.join(
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "[",   awful.tag.viewprev,
+    awful.key({ modkey,           }, "[", function ()
+                                              awful.tag.viewprev()
+                                              update_quake_console()
+                                          end,
               {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "]",  awful.tag.viewnext,
+    awful.key({ modkey,           }, "]", function ()
+                                              awful.tag.viewnext()
+                                              update_quake_console()
+                                          end,
               {description = "view next", group = "tag"}),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
+    awful.key({ modkey,           }, "Escape", function()
+                                              awful.tag.history.restore()
+                                              update_quake_console()
+                                          end,
               {description = "go back", group = "tag"}),
 
     awful.key({ modkey,           }, "k",
@@ -688,6 +710,7 @@ for i = 1, 10 do
                         if tag then
                            tag:view_only()
                         end
+                        update_quake_console()
                   end,
                   {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.
