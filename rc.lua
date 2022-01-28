@@ -323,7 +323,7 @@ local function update_quake_console(cli)
 
     if (not cli.hidden) then
         cli.floating = true
-        cli.ontop = true
+        if not cli.fullscreen then cli.ontop = true end
         cli:move_to_screen(awful.screen.focused ())
         cli:tags({awful.screen.focused().selected_tag})
         cli.skip_taskbar = true
