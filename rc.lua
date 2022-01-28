@@ -323,11 +323,6 @@ local function update_quake_console(cli)
 
     if (not cli.hidden) then
         cli.floating = true
-        if cli.maximized then
-            cli.border_width = 0
-        else
-            cli.border_width = 2
-        end
         cli.ontop = true
         cli:move_to_screen(awful.screen.focused ())
         cli:tags({awful.screen.focused().selected_tag})
@@ -619,7 +614,7 @@ globalkeys = gears.table.join(
         function ()
             os.execute ("pgrep -O1 -f QuakeConsole || urxvt -name QuakeConsole -title QuakeConsole &")
             for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole" end)
-            do c.hidden = not c.hidden end
+            do c.hidden = not c.hidden; break; end
             update_quake_console(c)
         end,
         {description = "toggle quake console", group = "quake"}
@@ -780,7 +775,7 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true; border_width = 2; }
     },
 
-    { rule = { name = "QuakeConsole" },
+    { rule = { instance = "QuakeConsole" },
       properties = {
           width=awful.screen.focused().workarea.width * 0.96,
           height=awful.screen.focused().workarea.height * 0.3,
@@ -1014,7 +1009,7 @@ client.connect_signal("manage", function (c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
-    if c.name == "QuakeConsole" then update_quake_console(c) end
+    if c.instance == "QuakeConsole" then update_quake_console(c) end
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -1074,11 +1069,13 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 client.connect_signal("property::floating", function(c)
         if c.maximized or c.fullscreen then return end
 
-        if c.floating and not c.maximized and not c.fullscreen and not c.name == "QuakeConsole" then
-            if c.titlebar == nil then
-               c:emit_signal("request::titlebars", "rules", {})
+        if c.floating and not c.maximized and not c.fullscreen then
+            if c.instance ~= "QuakeConsole" then
+                if c.titlebar == nil then
+                    c:emit_signal("request::titlebars", "rules", {})
+                end
+                awful.titlebar.show(c)
             end
-            awful.titlebar.show(c)
             c.border_width = 2
         else
             awful.titlebar.hide(c)
@@ -1092,10 +1089,10 @@ client.connect_signal("property::maximized", function(c)
             c.border_width = 0
         else
             if c.floating then
-                if not c.name == "QuakeConsole" then
+                if c.instance ~= "QuakeConsole" then
                     awful.titlebar.show(c)
-                    c.border_width = 2
                 end
+                c.border_width = 2
             end
         end
 end)
