@@ -813,7 +813,7 @@ awful.rules.rules = {
           width=awful.screen.focused().workarea.width * 0.96,
           height=awful.screen.focused().workarea.height * 0.4,
           x = awful.screen.focused().workarea.width * 0.02,
-          y = awful.screen.focused().workarea.height * 0.6 + mywibox_height
+          y = awful.screen.focused().workarea.height * 0.6 + mywibox_height - 4
       }
     },
     { rule = { instance = "QuakeConsole2" },
@@ -828,7 +828,7 @@ awful.rules.rules = {
       properties = {
           width=awful.screen.focused().workarea.width * 0.4,
           height=awful.screen.focused().workarea.height * 0.6 - mywibox_height,
-          x = awful.screen.focused().workarea.width * 0.6,
+          x = awful.screen.focused().workarea.width * 0.6 - 4,
           y = mywibox_height
       }
     },
