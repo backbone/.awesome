@@ -851,7 +851,7 @@ awful.rules.rules = {
 --    { rule = { class = "Vlc" },
 --      properties = { tag = "6" } },
     { rule = { class = "Audacious" },
-      properties = { tag = "0" } },
+      properties = { tag = "8" } },
 --    { rule = { class = "Audacity" },
 --      properties = { tag = "6" } },
 --    { rule = { class = "Gimp" },
