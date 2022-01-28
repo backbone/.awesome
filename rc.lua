@@ -313,11 +313,8 @@ disk:buttons(diskicon:buttons())
 local mywibox_height = 14.5
 local function update_quake_console(cli)
     if cli == nil then
-        for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole" end)
-        do
-            cli = c
-            break
-        end
+        for c in awful.client.iterate(function (c) return string.find(c.instance, "QuakeConsole") end)
+        do cli = c end
     end
     if cli == nil then return end
 
@@ -607,12 +604,30 @@ globalkeys = gears.table.join(
     -- Quake Console --
     awful.key({ modkey }, "grave",
         function ()
-            os.execute ("pgrep -O1 -f QuakeConsole || urxvt -name QuakeConsole -title QuakeConsole &")
-            for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole" end)
+            num = "1"
+            os.execute ("pgrep -O1 -f QuakeConsole"..num.." || urxvt -name QuakeConsole"..num.." -title QuakeConsole"..num.." &")
+            for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole"..num end)
             do c.hidden = not c.hidden; break; end
             update_quake_console(c)
-        end,
-        {description = "toggle quake console", group = "quake"}
+        end
+    ),
+    awful.key({ modkey }, "-",
+        function ()
+            num = "2"
+            os.execute ("pgrep -O1 -f QuakeConsole"..num.." || urxvt -name QuakeConsole"..num.." -title QuakeConsole"..num.." &")
+            for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole"..num end)
+            do c.hidden = not c.hidden; break; end
+            update_quake_console(c)
+        end
+    ),
+    awful.key({ modkey }, "=",
+        function ()
+            num = "3"
+            os.execute ("pgrep -O1 -f QuakeConsole"..num.." || urxvt -name QuakeConsole"..num.." -title QuakeConsole"..num.." &")
+            for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole"..num end)
+            do c.hidden = not c.hidden; break; end
+            update_quake_console(c)
+        end
     )
 )
 
@@ -770,12 +785,28 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true; border_width = 2; }
     },
 
-    { rule = { instance = "QuakeConsole" },
+    { rule = { instance = "QuakeConsole1" },
       properties = {
           width=awful.screen.focused().workarea.width * 0.96,
-          height=awful.screen.focused().workarea.height * 0.3,
+          height=awful.screen.focused().workarea.height * 0.4,
           x = awful.screen.focused().workarea.width * 0.02,
-          y = awful.screen.focused().workarea.height * 0.7 + mywibox_height
+          y = awful.screen.focused().workarea.height * 0.6 + mywibox_height
+      }
+    },
+    { rule = { instance = "QuakeConsole2" },
+      properties = {
+          width=awful.screen.focused().workarea.width * 0.4,
+          height=awful.screen.focused().workarea.height * 0.6 - mywibox_height,
+          x = awful.screen.focused().workarea.width * 0,
+          y = mywibox_height
+      }
+    },
+    { rule = { instance = "QuakeConsole3" },
+      properties = {
+          width=awful.screen.focused().workarea.width * 0.4,
+          height=awful.screen.focused().workarea.height * 0.6 - mywibox_height,
+          x = awful.screen.focused().workarea.width * 0.6,
+          y = mywibox_height
       }
     },
 --    { rule = { class = "URxvt" },
@@ -1004,7 +1035,7 @@ client.connect_signal("manage", function (c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
-    if c.instance == "QuakeConsole" then update_quake_console(c) end
+    if string.find(c.instance, "QuakeConsole") then update_quake_console(c) end
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -1065,7 +1096,7 @@ client.connect_signal("property::floating", function(c)
         if c.maximized or c.fullscreen then return end
 
         if c.floating and not c.maximized and not c.fullscreen then
-            if c.instance ~= "QuakeConsole" then
+            if c.instance ~= nil and not string.find(c.instance, "QuakeConsole") then
                 if c.titlebar == nil then
                     c:emit_signal("request::titlebars", "rules", {})
                 end
@@ -1084,7 +1115,7 @@ client.connect_signal("property::maximized", function(c)
             c.border_width = 0
         else
             if c.floating then
-                if c.instance ~= "QuakeConsole" then
+                if not string.find(c.instance, "QuakeConsole") then
                     awful.titlebar.show(c)
                 end
                 c.border_width = 2
