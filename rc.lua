@@ -1096,7 +1096,7 @@ client.connect_signal("property::floating", function(c)
         if c.maximized or c.fullscreen then return end
 
         if c.floating and not c.maximized and not c.fullscreen then
-            if c.instance ~= nil and not string.find(c.instance, "QuakeConsole") then
+            if c.instance == nil or not string.find(c.instance, "QuakeConsole") then
                 if c.titlebar == nil then
                     c:emit_signal("request::titlebars", "rules", {})
                 end
