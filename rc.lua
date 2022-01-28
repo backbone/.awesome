@@ -403,12 +403,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-" }, s, awful.layout.layouts[4])
-    awful.tag.add("+", {
-        --icon = "/path/to/icon.png",
-        layout = awful.layout.suit.fair,
-        screen = s,
-	})
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }, s, awful.layout.layouts[4])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -668,7 +663,7 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 12 do
+for i = 1, 10 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
@@ -832,13 +827,13 @@ awful.rules.rules = {
 --    { rule = { class = "Qt Jambi application" },
 --      properties = { tag = "1" } },
     { rule = { class = "Pidgin" },
-      properties = { tag = "+" } },
+      properties = { tag = "0" } },
     { rule = { class = "Telegram" },
-      properties = { tag = "+" } },
+      properties = { tag = "0" } },
     { rule = { class = "Viber" },
-      properties = { tag = "+" } },
+      properties = { tag = "0" } },
     { rule = { class = "Stardict" },
-      properties = { tag = "-" } },
+      properties = { tag = "9" } },
 --    { rule = { class = "MPlayer" },
 --      properties = { floating = true } },
 --    { rule = { class = "Texreport-gtk" },
@@ -940,7 +935,7 @@ awful.rules.rules = {
 --    { rule = { class = "Eiskaltdcpp" },
 --      properties = { tag = "1" } },
 --    { rule = { class = "Ekiga" },
---      properties = { tag = "+" } },
+--      properties = { tag = "0" } },
 --    { rule = { class = "Googleearth-bin" },
 --      properties = { tag = "1" } },
 --    { rule = { class = "Links" },
@@ -948,7 +943,7 @@ awful.rules.rules = {
 --    { rule = { class = "Linphone" },
 --      properties = { tag = "1" } },
     { rule = { class = "psi" },
-      properties = { tag = "+" } },
+      properties = { tag = "0" } },
 --    { rule = { class = "Transmission" },
 --      properties = { tag = "1" } },
 --    { rule = { class = "Vncviewer" },
