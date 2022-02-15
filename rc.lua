@@ -323,7 +323,11 @@ local function update_quake_console_real(cli)
 end
 local function update_quake_console(cli)
     if cli == nil then
-        for c in awful.client.iterate(function (c) return string.find(c.instance, "QuakeConsole") end)
+        for c in awful.client.iterate(
+            function (c)
+                if c.instance == nil then return nil end
+                return string.find(c.instance, "QuakeConsole")
+            end)
         do
             update_quake_console_real(c)
         end
@@ -1143,7 +1147,7 @@ client.connect_signal("property::maximized", function(c)
             c.border_width = 0
         else
             if c.floating then
-                if not string.find(c.instance, "QuakeConsole") then
+                if c.instance == nil or not string.find(c.instance, "QuakeConsole") then
                     awful.titlebar.show(c)
                 end
                 c.border_width = 2
