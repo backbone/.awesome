@@ -263,8 +263,8 @@ volicon:buttons(
         -- awful.button({ }, 1, function () os.execute("pgrep alsamixer || urxvt -e alsamixer --view=all &") end),
         awful.button({ }, 1, function () os.execute("pgrep pavucontrol || pavucontrol &") end),
         awful.button({ }, 3, function () os.execute("pgrep alsamixer || urxvt -e alsamixer -c 2 &") end),
-        awful.button({ }, 4, function () os.execute("pgrep -x amixer || amixer set Master 2%+") end),
-        awful.button({ }, 5, function () os.execute("pgrep -x amixer || amixer set Master 2%-") end)
+        awful.button({ }, 4, function () os.execute("pgrep -x pactl || pactl -- set-sink-volume @DEFAULT_SINK@ +5%") end),
+        awful.button({ }, 5, function () os.execute("pgrep -x pactl || pactl -- set-sink-volume @DEFAULT_SINK@ -5%") end)
     )
 )
 volpct = wibox.widget.textbox()
@@ -614,12 +614,12 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- Volume control --
-    awful.key({ modkey }, ".", function () os.execute("pgrep -x amixer || amixer set Master 5%+") end, {description = "increase volume by 5%", group = "sound"}),
-    awful.key({ modkey }, ",", function () os.execute("pgrep -x amixer || amixer set Master 5%-") end, {description = "decrease volume by 5%", group = "sound"}),
-    awful.key({ modkey }, "/", function () awful.util.spawn("amixer sset Master toggle") end, {description = "mute / unmute", group = "sound"}),
-    awful.key({ }, "XF86AudioRaiseVolume", function () os.execute("pgrep -x amixer || amixer set Master 5%+") end, {description = "increase volume by 5%", group = "sound"}),
-    awful.key({ }, "XF86AudioLowerVolume", function () os.execute("pgrep -x amixer || amixer set Master 5%-") end, {description = "decrease volume by 5%", group = "sound"}),
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer sset Master toggle") end, {description = "mute / unmute", group = "sound"}),
+    awful.key({ modkey }, ".", function () os.execute("pgrep -x pactl || pactl -- set-sink-volume @DEFAULT_SINK@ +5%") end, {description = "increase volume by 5%", group = "sound"}),
+    awful.key({ modkey }, ",", function () os.execute("pgrep -x pactl || pactl -- set-sink-volume @DEFAULT_SINK@ -5%") end, {description = "decrease volume by 5%", group = "sound"}),
+    awful.key({ modkey }, "/", function () awful.util.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle") end, {description = "mute / unmute", group = "sound"}),
+    awful.key({ }, "XF86AudioRaiseVolume", function () os.execute("pgrep -x pactl || pactl -- set-sink-volume @DEFAULT_SINK@ +5%") end, {description = "increase volume by 5%", group = "sound"}),
+    awful.key({ }, "XF86AudioLowerVolume", function () os.execute("pgrep -x pactl || pactl -- set-sink-volume @DEFAULT_SINK@ -5%") end, {description = "decrease volume by 5%", group = "sound"}),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle") end, {description = "mute / unmute", group = "sound"}),
 
     -- Player control --
     awful.key({ modkey }, "p",function () awful.util.spawn( "mpc play" ); awful.util.spawn( "audacious -p" ) end, {description = "start play", group = "sound"} ),
