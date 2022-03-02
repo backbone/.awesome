@@ -307,7 +307,7 @@ local diskicon = wibox.widget.imagebox()
 diskicon:set_image(beautiful.widget_disk)
 diskicon:buttons(awful.util.table.join(awful.button({ }, 1, show_iotop)))
 disk = wibox.widget.textbox()
-vicious.register(disk, vicious.widgets.fs, '<span color="#E68347">${/ avail_gb}/${/home avail_gb}/${/mnt/1tb avail_gb}Gb </span>', 15)
+vicious.register(disk, vicious.widgets.fs, '<span color="#E68347">${/ avail_gb}/${/home avail_gb}/${/mnt/cache avail_gb}Gb </span>', 15)
 disk:buttons(diskicon:buttons())
 
 local mywibox_height = 14.5
