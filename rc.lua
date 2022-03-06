@@ -315,7 +315,6 @@ local function update_quake_console_real(cli)
     if (not cli.hidden) then
         cli.floating = true
         if not cli.fullscreen then cli.ontop = true end
-        cli:move_to_screen(awful.screen.focused ())
         cli:tags({awful.screen.focused().selected_tag})
         cli.skip_taskbar = true
         client.focus = cli
@@ -642,8 +641,13 @@ globalkeys = gears.table.join(
             num = "1"
             os.execute ("pgrep -O1 -f QuakeConsole"..num.." || urxvt -name QuakeConsole"..num.." -title QuakeConsole"..num.." &")
             for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole"..num end)
-            do c.hidden = not c.hidden; break; end
+            do
+                c.hidden = not c.hidden;
+                c:move_to_screen(awful.screen.focused ())
+                break;
+            end
             update_quake_console(c)
+            if c ~= nil then c:move_to_screen(awful.screen.focused ()) end
         end
     ),
     awful.key({ modkey }, "-",
@@ -651,7 +655,11 @@ globalkeys = gears.table.join(
             num = "2"
             os.execute ("pgrep -O1 -f QuakeConsole"..num.." || urxvt -name QuakeConsole"..num.." -title QuakeConsole"..num.." &")
             for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole"..num end)
-            do c.hidden = not c.hidden; break; end
+            do
+                c.hidden = not c.hidden;
+                c:move_to_screen(awful.screen.focused ())
+                break;
+            end
             update_quake_console(c)
         end
     ),
@@ -660,7 +668,11 @@ globalkeys = gears.table.join(
             num = "3"
             os.execute ("pgrep -O1 -f QuakeConsole"..num.." || urxvt -name QuakeConsole"..num.." -title QuakeConsole"..num.." &")
             for c in awful.client.iterate(function (c) return c.instance == "QuakeConsole"..num end)
-            do c.hidden = not c.hidden; break; end
+            do
+                c.hidden = not c.hidden;
+                c:move_to_screen(awful.screen.focused ())
+                break;
+            end
             update_quake_console(c)
         end
     )
