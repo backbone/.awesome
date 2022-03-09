@@ -262,6 +262,7 @@ volicon:buttons(
     awful.util.table.join(
         -- awful.button({ }, 1, function () os.execute("pgrep alsamixer || urxvt -e alsamixer --view=all &") end),
         awful.button({ }, 1, function () os.execute("pgrep pavucontrol || pavucontrol &") end),
+        awful.button({ }, 2, function () os.execute("pgrep qpaeq || urxvt -e qpaeq &") end),
         awful.button({ }, 3, function () os.execute("pgrep alsamixer || urxvt -e alsamixer -c 2 &") end),
         awful.button({ }, 4, function () os.execute("pgrep -x pactl || pactl -- set-sink-volume @DEFAULT_SINK@ +5%") end),
         awful.button({ }, 5, function () os.execute("pgrep -x pactl || pactl -- set-sink-volume @DEFAULT_SINK@ -5%") end)
